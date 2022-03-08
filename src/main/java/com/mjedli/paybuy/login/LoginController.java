@@ -56,7 +56,7 @@ public class LoginController {
 	@GetMapping(value = "/logout")
 	public String logoutPage () {
 		SecurityContextHolder.getContext().setAuthentication(null);
-	    return "redirect:/loginBarber?logout";
+	    return "redirect:/loginApp?logout";
 	}
 	
 	@GetMapping(value = "/")
