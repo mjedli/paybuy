@@ -34,15 +34,15 @@ public class BasicConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/barber/model/insert");
-		http.authorizeRequests().antMatchers("/barber/forget/password");
-		http.authorizeRequests().antMatchers("/barber/update/password");
+		http.authorizeRequests().antMatchers("/paybay/model/insert");
+		http.authorizeRequests().antMatchers("/paybay/forget/password");
+		http.authorizeRequests().antMatchers("/paybay/update/password");
 		
-		http.authorizeRequests().antMatchers("/barber*").hasAuthority("ROLE_USER")
-		.antMatchers("/barber/*").hasAuthority("ROLE_USER")
-		.antMatchers("/").hasAuthority("ROLE_USER").and().formLogin().loginPage("/loginBarber").loginProcessingUrl("/login")
+		http.authorizeRequests().antMatchers("/paybay*").hasAuthority("ROLE_USER")
+		.antMatchers("/paybay/*").hasAuthority("ROLE_USER")
+		.antMatchers("/").hasAuthority("ROLE_USER").and().formLogin().loginPage("/loginApp").loginProcessingUrl("/login")
         .defaultSuccessUrl("/home", true);
-		http.logout().logoutSuccessUrl("/loginBarber?logout");
+		http.logout().logoutSuccessUrl("/loginApp?logout");
 		
 		http.csrf();
 	}

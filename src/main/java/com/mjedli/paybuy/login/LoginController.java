@@ -4,10 +4,7 @@
 package com.mjedli.paybuy.login;
 
 import java.security.Principal;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -16,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,7 +37,7 @@ import com.mjedli.paybuy.login.model.LoginObject;
 public class LoginController {
 
 	
-	private static final String HREF_BASE = "/parismon";
+	private static final String HREF_BASE = "/paybay";
 
 	@Autowired
 	ParismonService parismonService;
@@ -66,17 +62,6 @@ public class LoginController {
 	@GetMapping(value = "/")
 	private String start() {
 		return "paybuy/index";
-	}
-
-	
-	@GetMapping(value = "/settings")
-	private String settings(Principal principal, Model modelMap) {
-		if(principal == null) {
-			return HREF_BASE + "/login";
-		}
-		LoginPojo barber = parismonService.findParismonByMail(principal.getName());
-		modelMap.addAttribute("barber1", barber);
-		return "settings";
 	}
 	
 	@GetMapping(value = "/home")
@@ -105,7 +90,7 @@ public class LoginController {
 		return HREF_BASE + "/login";
 	}
 	
-	@PostMapping(value = "/parismon/model/insert")
+	@PostMapping(value = HREF_BASE + "/model/insert")
 	private String insertBarberModel(@ModelAttribute LoginObject barber1, Model modelMap) {
 		try {
 			

@@ -18,14 +18,10 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/loginBarber").setViewName("login/login");
-        registry.addViewController("/registrationbarber").setViewName("login/registration");
-        registry.addViewController("/forgetbarber").setViewName("login/forget");
+        registry.addViewController("/loginApp").setViewName("login/login");
+        registry.addViewController("/registrationApp").setViewName("login/registration");
+        registry.addViewController("/forgetApp").setViewName("login/forget");
         
-        registry.addViewController("/loginCustomer").setViewName("customer/login");
-        registry.addViewController("/registrationcustomer").setViewName("customer/registration");
-        registry.addViewController("/forgetcustomer").setViewName("customer/forget");
-
     }
         
 }
