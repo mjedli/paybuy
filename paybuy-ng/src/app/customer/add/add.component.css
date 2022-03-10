@@ -1,4 +1,3 @@
-<style>
   :host {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 14px;
@@ -287,98 +286,63 @@
       visibility: hidden;
     }
   }
-</style>
 
 
-<!-- Side navigation -->
-<div class="sidenav">
-	<div class="card">
-		<h2>Client</h2>
-	</div>
-	<a class="card"  rel="noopener" routerLink="/menu" routerLinkActive="active">
-		<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>  
-	  		<span>Menu</span>
-	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
-	</a>
-	<a class="card"  rel="noopener" routerLink="/customer" routerLinkActive="active">
-		<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>  
-	  		<span>Ajouter</span>
-	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
-	</a>
-	<a class="card"  rel="noopener" routerLink="/customer" routerLinkActive="active">
-		<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>  
-	  		<span>Rechercher</span>
-	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
-	</a>
-</div>
+/************************************************/
 
-<!-- Content -->
-<div class="main">
-<div class="container-g">
-Les écoles peuvent être obligatoires ou facultatives, selon les pays, durant un temps plus ou moins long. Dans presque tous les pays (la France ou les États-Unis par exemple), ce n'est pas l'école qui est obligatoire, mais l'instruction des enfants. Dès lors, des parents peuvent décider d'instruire eux-mêmes leurs enfants à la maison ou de les confier à des écoles de leur choix. En France, on impose que, en fin de cursus, les enfants aient acquis un ensemble de compétences définies par décret (article L.131-10 du Code de l’éducation) 2.
+.content {
+    display: flex;
+    margin: 82px auto 32px;
+    padding: 0 16px;
+    max-width: 600px;
+    flex-direction: column;
+    align-items: center;
+}
+  
+svg#clouds {
+    position: fixed;
+    bottom: -160px;
+    left: -230px;
+    z-index: -10;
+    width: 1920px;
+}
+  
+.main {
+  margin-top: 120px; /* Add a top margin to avoid content overlay */
+  margin-left: 180px; /* Same as the width of the sidebar */
+  padding: 0px 10px;
+}
 
-L'âge de début d'instruction obligatoire se situe généralement aux alentours de 6 ans. Cependant, depuis la rentrée 2019, l'instruction obligatoire se fait dès l'âge de trois ans à la suite de l'annonce du président Emmanuel Macron le 27 mars 20183 (6 ans au Canada, 7 ans en Finlande).
+.sidenav {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 180px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #EEEEEEEE; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 100px;
+}
 
-L'âge de fin d'obligation d'instruction est nettement plus disparate, variant de 9 ans en Chine populaire à 16 ans dans beaucoup de pays occidentaux ; il dépend essentiellement des moyens financiers que le pays peut ou veut consacrer à l'éducation de sa jeunesse.
-
-Bien qu'une augmentation notable ait été enregistrée dans de nombreux pays, il était constaté en 2000, lors du Forum mondial sur l'éducation de Dakar, que plus de 113 millions d'enfants — surtout des filles — ne recevaient pas d'éducation primaire. Les délégués de 181 pays de ce forum se sont donc engagés à faire en sorte que d'ici 2015 tous les enfants, notamment les filles et les enfants en difficulté et appartenant aux minorités ethniques, aient la possibilité d'accéder à un enseignement primaire obligatoire et gratuit de qualité et de le suivre jusqu'à son terme. 
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-v
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-v
-v
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-v
-<br>
-<br>
-<br>
-v
-<br>
-<br>
-<br>
-v
-v
-<br>
-<br>
-<br>
-<br>
-
-
-<div class="content" role="main">
-  <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
-    <path id="Path_39" data-name="Path 39" d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z" transform="translate(142.69 -634.312)" fill="#eee"/>
-  </svg>
-</div>
-
-</div>
-</div>
+.container-g {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .container-g {
+    width: 570px;
+  }
+}
+@media (min-width: 992px) {
+  .container-g {
+    width: 790px;
+  }
+}
+@media (min-width: 1200px) {
+  .container-g {
+    width: 990px;
+  }
+}
