@@ -13,13 +13,21 @@ export class AddCustomerComponent {
 	constructor(public customerService:CustomerService, public router : Router) { }
 
 	currentCustomer:Customer  =  
-	{id : 0, name : '', firstname : '', lastname : '', birthday : '', mobile : '', address : ''};
+	{id : '', name : '', firstname : '', lastname : '', birthday : '', mobile : '', address : ''};
 	
 	
 
   	addCustomer() {
-   	 	this.customerService.addCustomer(this.currentCustomer);
-   	 	this.router.navigateByUrl("customer/success");
+      this.customerService.addCustomer(this.currentCustomer).subscribe({
+        next: data => {
+			this.router.navigateByUrl("customer/success");
+            //this.postId = data.id;
+        },
+        error: error => {
+            console.error('There was an error!', error);
+            this.router.navigateByUrl("customer/error");
+        }
+      });
  	}
 
 }

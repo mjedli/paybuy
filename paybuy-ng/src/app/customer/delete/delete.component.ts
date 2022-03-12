@@ -16,7 +16,7 @@ export class DeleteCustomerComponent implements OnInit {
 	
 	searchValue:string="";
 	
-	customer:Customer;
+	customer:Customer = {} as Customer;
 	
 	private routeSub: Subscription;
 	
@@ -29,12 +29,32 @@ export class DeleteCustomerComponent implements OnInit {
   	}
 	
   	getCustomerById() {
-		this.customer = this.customerService.getCustomerByCurrentId();
+		this.customerService.getCustomerByCurrentId().subscribe({
+	        next: data => {
+				this.customer = data;
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("customer/error");
+	        }
+      	});
  	}
 
   	deleteCustomer() {
-		this.customerService.removeCustomer();
-		this.router.navigateByUrl("customer/success");
+		this.customerService.removeCustomer(this.customer).subscribe({
+	        next: data => {
+				if(data == 1) {
+					this.router.navigateByUrl("customer/success");
+				} else {
+					this.router.navigateByUrl("customer/error");
+				}
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("customer/error");
+	        }
+      	});
+		
  	}
 
 }

@@ -1,5 +1,5 @@
-export interface Customer {
-  id:number;
+export class Customer {
+  id:string;
   name:string;
   firstname:string;
   lastname:string;

@@ -16,7 +16,7 @@ export class UpdateCustomerComponent implements OnInit {
 	
 	searchValue:string="";
 	
-	customer:Customer;
+	customer:Customer = {} as Customer;
 	
 	private routeSub: Subscription;
 	
@@ -29,12 +29,27 @@ export class UpdateCustomerComponent implements OnInit {
   	}
 	
   	getCustomerById() {
-		this.customer = this.customerService.getCustomerByCurrentId();
+		this.customerService.getCustomerByCurrentId().subscribe({
+	        next: data => {
+				this.customer = data;
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("customer/error");
+	        }
+      	});
  	}
 
-  	updateCustomer() {
-		this.customerService.modifiyCustomer(this.customer);
-		this.router.navigateByUrl("customer/success");
+  	updateCustomer() {	
+		this.customerService.modifiyCustomer(this.customer).subscribe({
+	        next: data => {
+				this.router.navigateByUrl("customer/success");
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("customer/error");
+	        }
+      	});
  	}
 
 }

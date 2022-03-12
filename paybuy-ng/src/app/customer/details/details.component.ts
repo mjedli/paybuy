@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CustomerService } from '../service.component';
@@ -11,11 +12,11 @@ import { Customer } from '../model/customer';
 })
 export class DetailsCustomerComponent implements OnInit {
 
-	constructor(public customerService:CustomerService, private route: ActivatedRoute) { }
+	constructor(public customerService:CustomerService, private route: ActivatedRoute, public router : Router) { }
 	
 	searchValue:string="";
 	
-	customer:Customer;
+	customer:Customer = {} as Customer;
 	
 	private routeSub: Subscription;
 	
@@ -28,7 +29,15 @@ export class DetailsCustomerComponent implements OnInit {
   	}
 	
   	getCustomerById() {
-		this.customer = this.customerService.getCustomerByCurrentId();
+		this.customerService.getCustomerByCurrentId().subscribe({
+	        next: data => {
+				this.customer = data;
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("customer/error");
+	        }
+      	});
  	}
 
 }

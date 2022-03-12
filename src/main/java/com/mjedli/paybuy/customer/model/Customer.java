@@ -1,7 +1,9 @@
 /**
  * 
  */
-package com.mjedli.customer.model;
+package com.mjedli.paybuy.customer.model;
+
+import org.springframework.data.annotation.Transient;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,9 +16,12 @@ import org.springframework.lang.NonNull;
 @Document
 public class Customer {
 
+    @Transient
+    public static final String SEQUENCE_NAME = "customer_sequence";
+	
 	@Id
 	@NonNull
-	private String id;
+	private long id;
 	
 	private String name = "";
 	private String firstname = "";
@@ -25,11 +30,12 @@ public class Customer {
 	private String birthday = "";
 	private String mobile = "";
 	private String address = "";
+
 	
-	public String getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
