@@ -18,16 +18,18 @@ export class AddCustomerComponent {
 	
 
   	addCustomer() {
-      this.customerService.addCustomer(this.currentCustomer).subscribe({
-        next: data => {
-			this.router.navigateByUrl("customer/success");
-            //this.postId = data.id;
-        },
-        error: error => {
-            console.error('There was an error!', error);
-            this.router.navigateByUrl("customer/error");
-        }
-      });
+		if(this.currentCustomer.name != '' && this.currentCustomer.firstname != '' && this.currentCustomer.lastname != '') {
+			this.customerService.addCustomer(this.currentCustomer).subscribe({
+		        next: data => {
+					this.router.navigateByUrl("customer/success");
+		            //this.postId = data.id;
+		        },
+		        error: error => {
+		            console.error('There was an error!', error);
+		            this.router.navigateByUrl("customer/error");
+		        }
+	      });
+		}
  	}
 
 }
