@@ -114,6 +114,7 @@ class UpdateCustomerComponent {
         this.router = router;
         this.route = route;
         this.searchValue = "";
+        this.customer = {};
     }
     ngOnInit() {
         this.routeSub = this.route.params.subscribe(params => {
@@ -122,11 +123,26 @@ class UpdateCustomerComponent {
         this.getCustomerById();
     }
     getCustomerById() {
-        this.customer = this.customerService.getCustomerByCurrentId();
+        this.customerService.getCustomerByCurrentId().subscribe({
+            next: data => {
+                this.customer = data;
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("customer/error");
+            }
+        });
     }
     updateCustomer() {
-        this.customerService.modifiyCustomer(this.customer);
-        this.router.navigateByUrl("customer/success");
+        this.customerService.modifiyCustomer(this.customer).subscribe({
+            next: data => {
+                this.router.navigateByUrl("customer/success");
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("customer/error");
+            }
+        });
     }
 }
 UpdateCustomerComponent.ɵfac = function UpdateCustomerComponent_Factory(t) { return new (t || UpdateCustomerComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_component__WEBPACK_IMPORTED_MODULE_1__["CustomerService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"])); };
@@ -325,6 +341,7 @@ class DeleteCustomerComponent {
         this.router = router;
         this.route = route;
         this.searchValue = "";
+        this.customer = {};
     }
     ngOnInit() {
         this.routeSub = this.route.params.subscribe(params => {
@@ -333,11 +350,31 @@ class DeleteCustomerComponent {
         this.getCustomerById();
     }
     getCustomerById() {
-        this.customer = this.customerService.getCustomerByCurrentId();
+        this.customerService.getCustomerByCurrentId().subscribe({
+            next: data => {
+                this.customer = data;
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("customer/error");
+            }
+        });
     }
     deleteCustomer() {
-        this.customerService.removeCustomer();
-        this.router.navigateByUrl("customer/success");
+        this.customerService.removeCustomer(this.customer).subscribe({
+            next: data => {
+                if (data == 1) {
+                    this.router.navigateByUrl("customer/success");
+                }
+                else {
+                    this.router.navigateByUrl("customer/error");
+                }
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("customer/error");
+            }
+        });
     }
 }
 DeleteCustomerComponent.ɵfac = function DeleteCustomerComponent_Factory(t) { return new (t || DeleteCustomerComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_component__WEBPACK_IMPORTED_MODULE_1__["CustomerService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"])); };
@@ -497,6 +534,7 @@ __webpack_require__.r(__webpack_exports__);
 // #docregion http-options
 const httpOptions = {
     headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
         Authorization: 'my-auth-token'
     })
@@ -547,13 +585,16 @@ class CustomerService {
     /*
     * getComponentByCurrentId
     */
-    getCustomerByCurrentId() {
+    getCustomerByCurrentIdOLD() {
         return this.list.find(x => x.id == this.currentIdSelected);
+    }
+    getCustomerByCurrentId() {
+        return this.http.get("http://localhost:8080/paybay/customer/" + this.currentIdSelected);
     }
     /*
     * modifiyComponent
     */
-    modifiyCustomer(customer) {
+    modifiyCustomerOLD(customer) {
         const index = this.list.findIndex((e) => e.id === customer.id);
         if (index === -1) {
             this.list.push(customer);
@@ -562,15 +603,21 @@ class CustomerService {
             this.list[index] = customer;
         }
     }
+    modifiyCustomer(customer) {
+        return this.http.post("http://localhost:8080/paybay/customer/update", customer, httpOptions);
+    }
     /*
     * removeComponent
     */
-    removeCustomer() {
+    removeCustomerOLD() {
         const index = this.list.findIndex((e) => e.id === this.currentIdSelected);
         if (index !== -1) {
             this.list.splice(index, 1);
         }
         this.currentIdSelected = "0";
+    }
+    removeCustomer(customer) {
+        return this.http.post("http://localhost:8080/paybay/customer/remove", customer, httpOptions);
     }
     /*
     * getAllComponent
@@ -892,10 +939,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class DetailsCustomerComponent {
-    constructor(customerService, route) {
+    constructor(customerService, route, router) {
         this.customerService = customerService;
         this.route = route;
+        this.router = router;
         this.searchValue = "";
+        this.customer = {};
     }
     ngOnInit() {
         this.routeSub = this.route.params.subscribe(params => {
@@ -904,10 +953,18 @@ class DetailsCustomerComponent {
         this.getCustomerById();
     }
     getCustomerById() {
-        this.customer = this.customerService.getCustomerByCurrentId();
+        this.customerService.getCustomerByCurrentId().subscribe({
+            next: data => {
+                this.customer = data;
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("customer/error");
+            }
+        });
     }
 }
-DetailsCustomerComponent.ɵfac = function DetailsCustomerComponent_Factory(t) { return new (t || DetailsCustomerComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_component__WEBPACK_IMPORTED_MODULE_1__["CustomerService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"])); };
+DetailsCustomerComponent.ɵfac = function DetailsCustomerComponent_Factory(t) { return new (t || DetailsCustomerComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_component__WEBPACK_IMPORTED_MODULE_1__["CustomerService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"])); };
 DetailsCustomerComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: DetailsCustomerComponent, selectors: [["app-detailscustomer"]], decls: 53, vars: 7, consts: [[1, "sidenav"], [1, "card"], ["rel", "noopener", "routerLink", "/menu", "routerLinkActive", "active", 1, "card"], ["xmlns", "http://www.w3.org/2000/svg", "width", "24", "height", "24", "viewBox", "0 0 24 24", 1, "material-icons"], ["d", "M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"], ["d", "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"], ["rel", "noopener", "routerLink", "/customer/add", "routerLinkActive", "active", 1, "card"], ["rel", "noopener", "routerLink", "/customer/search", "routerLinkActive", "active", 1, "card"], [1, "main"], [1, "container-g"], ["role", "main", 1, "content"], ["id", "clouds", "alt", "Gray Clouds Background", "xmlns", "http://www.w3.org/2000/svg", "width", "2611.084", "height", "485.677", "viewBox", "0 0 2611.084 485.677"], ["id", "Path_39", "data-name", "Path 39", "d", "M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z", "transform", "translate(142.69 -634.312)", "fill", "#eee"]], template: function DetailsCustomerComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
@@ -1027,7 +1084,7 @@ DetailsCustomerComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵ�
                 templateUrl: 'details.component.html',
                 styleUrls: ['details.component.css'],
             }]
-    }], function () { return [{ type: _service_component__WEBPACK_IMPORTED_MODULE_1__["CustomerService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] }]; }, null); })();
+    }], function () { return [{ type: _service_component__WEBPACK_IMPORTED_MODULE_1__["CustomerService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }]; }, null); })();
 
 
 /***/ }),
