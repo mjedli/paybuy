@@ -10,17 +10,38 @@ import { DeleteCustomerComponent } from './customer/delete/delete.component';
 import { SuccessCustomerComponent } from './customer/success/success.component';
 import { ErrorCustomerComponent } from './customer/error/error.component';
 
+import { AddProductComponent } from './stock/add/add.component';
+import { SearchProductComponent } from './stock/search/search.component';
+import { EmptyProductComponent } from './stock/empty/empty.component';
+import { DetailsProductComponent } from './stock/details/details.component';
+import { UpdateProductComponent } from './stock/update/update.component';
+import { DeleteProductComponent } from './stock/delete/delete.component';
+import { SuccessProductComponent } from './stock/success/success.component';
+import { ErrorProductComponent } from './stock/error/error.component';
+
+
 const routes: Routes = [
 	
 	{ path: '', redirectTo:'menu', pathMatch: 'full' },
 	{ path: 'menu', component: MenuComponent },
+	
  	{ path: 'customer/add', component: AddCustomerComponent },
  	{ path: 'customer/search', component: SearchCustomerComponent },
  	{ path: 'customer/details/:idcustomer', component: DetailsCustomerComponent },
  	{ path: 'customer/update/:idcustomer', component: UpdateCustomerComponent },
  	{ path: 'customer/delete/:idcustomer', component: DeleteCustomerComponent },
  	{ path: 'customer/success', component: SuccessCustomerComponent },
- 	{ path: 'customer/error', component: ErrorCustomerComponent }
+ 	{ path: 'customer/error', component: ErrorCustomerComponent },
+ 	
+ 	{ path: 'stock/product/add', component: AddProductComponent },
+ 	{ path: 'stock/product/search', component: SearchProductComponent },
+ 	{ path: 'stock/product/empty', component: EmptyProductComponent },
+ 	{ path: 'stock/product/details/:idproduct', component: DetailsProductComponent },
+ 	{ path: 'stock/product/update/:idproduct', component: UpdateProductComponent },
+ 	{ path: 'stock/product/delete/:idproduct', component: DeleteProductComponent },
+ 	{ path: 'stock/product/success', component: SuccessProductComponent },
+ 	{ path: 'stock/product/error', component: ErrorProductComponent },
+ 	
 
 ];
 
