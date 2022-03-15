@@ -31,6 +31,8 @@ import { DeleteProductComponent } from './stock/delete/delete.component';
 import { SuccessProductComponent } from './stock/success/success.component';
 import { ErrorProductComponent } from './stock/error/error.component';
 
+import { SearchAddInvoiceComponent } from './invoice/searchadd/searchadd.component';
+
 import { CustomerService } from './customer/service.component';
 import { StockService } from './stock/service.component';
 import { ProviderService } from './provider/service.component';
@@ -57,7 +59,9 @@ import { ProviderService } from './provider/service.component';
     UpdateProductComponent,
     DeleteProductComponent,
     SuccessProductComponent,
-    ErrorProductComponent
+    ErrorProductComponent,
+    
+    SearchAddInvoiceComponent
     
   ],
   imports: [

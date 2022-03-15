@@ -1,19 +1,14 @@
 <!-- Side navigation -->
 <div class="sidenav">
 	<div class="card">
-		<h5>Stock</h5>
+		<h5>Facture</h5>
 	</div>
 	<a class="card"  rel="noopener" routerLink="/menu" routerLinkActive="active">
 		<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>  
 	  		<span>Menu</span>
 	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
 	</a>
-	<a class="card"  rel="noopener" routerLink="/stock/product/empty" routerLinkActive="active">
-		<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>  
-	  		<span>Manquants</span>
-	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
-	</a>
-	<a class="card"  rel="noopener" routerLink="/stock/product/add" routerLinkActive="active">
+	<a class="card"  rel="noopener" routerLink="/invoice/add" routerLinkActive="active">
 		<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>  
 	  		<span>Ajouter</span>
 	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
@@ -30,9 +25,9 @@
 <div class="container-g">
 
 <hr>
-<h3>Ajouter produit</h3>
+<h3>Ajouter facture</h3>
 <hr>
-<p>Rechercher le fournisseur de votre produit.</p>
+<p>Rechercher le client de votre facture.</p>
 <br>
 <br>
 
@@ -45,7 +40,7 @@
 	</p>
 	<br>
 	<input type="hidden"  name="token" class="form-control-b" value="">
-	<button class="btn btn-lg btn-primary btn-block" type="submit" (click)=getSearchProviders()>Rechercher</button>
+	<button class="btn btn-lg btn-primary btn-block" type="submit" (click)=getSearchCustomers()>Rechercher</button>
 </form>
 
 <br>
@@ -63,13 +58,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let provider of list">
-      <th scope="row">{{provider.id}}</th>
-      <td>{{provider.name}}</td>
-      <td>{{provider.lastname}}</td>
-      <td>{{provider.firstname}}</td>
-      <td>{{provider.birthday}}</td>
-      <td><a [routerLink]="['/stock/product/add', provider.id]"><i class="material-icons">add</i></a></td>
+    <tr *ngFor="let customer of list">
+      <th scope="row">{{customer.id}}</th>
+      <td>{{customer.name}}</td>
+      <td>{{customer.lastname}}</td>
+      <td>{{customer.firstname}}</td>
+      <td>{{customer.birthday}}</td>
+      <td><a [routerLink]="['/invoice/add', customer.id]"><i class="material-icons">add</i></a></td>
     </tr>
   </tbody>
 </table>

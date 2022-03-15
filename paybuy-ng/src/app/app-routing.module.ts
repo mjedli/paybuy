@@ -20,6 +20,7 @@ import { DeleteProductComponent } from './stock/delete/delete.component';
 import { SuccessProductComponent } from './stock/success/success.component';
 import { ErrorProductComponent } from './stock/error/error.component';
 
+import { SearchAddInvoiceComponent } from './invoice/searchadd/searchadd.component';
 
 const routes: Routes = [
 	
@@ -44,7 +45,8 @@ const routes: Routes = [
  	{ path: 'stock/product/success', component: SuccessProductComponent },
  	{ path: 'stock/product/error', component: ErrorProductComponent },
  	
-
+ 	{ path: 'invoice/add', component: SearchAddInvoiceComponent },
+ 
 ];
 
 @NgModule({
