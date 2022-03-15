@@ -22,6 +22,7 @@ import { SuccessCustomerComponent } from './customer/success/success.component'
 import { ErrorCustomerComponent } from './customer/error/error.component';
 
 import { AddProductComponent } from './stock/add/add.component';
+import { SearchAddProductComponent } from './stock/searchadd/searchadd.component';
 import { SearchProductComponent } from './stock/search/search.component';
 import { EmptyProductComponent } from './stock/empty/empty.component';
 import { DetailsProductComponent } from './stock/details/details.component';
@@ -32,6 +33,8 @@ import { ErrorProductComponent } from './stock/error/error.component';
 
 import { CustomerService } from './customer/service.component';
 import { StockService } from './stock/service.component';
+import { ProviderService } from './provider/service.component';
+
 
 
 @NgModule({
@@ -47,6 +50,7 @@ import { StockService } from './stock/service.component';
     ErrorCustomerComponent,
     
     AddProductComponent,
+    SearchAddProductComponent,
     SearchProductComponent,
     EmptyProductComponent,
     DetailsProductComponent,
@@ -60,7 +64,7 @@ import { StockService } from './stock/service.component';
     BrowserModule, FormsModule, HttpClientModule,
     AppRoutingModule
   ],
-  providers: [CustomerService, StockService],
+  providers: [CustomerService, StockService, ProviderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

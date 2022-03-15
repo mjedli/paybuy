@@ -24,59 +24,55 @@
 	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
 	</a>
 </div>
+
 <!-- Content -->
 <div class="main">
 <div class="container-g">
 
 <hr>
-<h3>Ajouter Produit</h3>
+<h3>Ajouter produit</h3>
 <hr>
-<p>Ajouter les données de votre produit.</p>
-<br>
-<br>
-<p>Fournisseur : {{provider.name}}</p>
+<p>Rechercher le fournisseur de produit.</p>
 <br>
 <br>
 
 <form class="form-signin" method="post" action="">
 	<p>
 		<label for="username" class="sr-only">Nom</label> <input
-			type="text" name="product.name" class="form-control"
-			placeholder="Nom" autofocus 
-			value="{{product.name}}" [(ngModel)]="product.name">
-	</p>
-	<br>
-	<p>
-		<label for="username" class="sr-only">Quantité</label> <input
-			type="text"  name="product.amount" class="form-control"
-			placeholder="Quantité" required autofocus 
-			value="{{product.amount}}" [(ngModel)]="product.amount">
-	</p>
-	<br>
-	<p>
-		<label for="username" class="sr-only">Prix achat</label> <input
-			type="text"  name="product.buyingPrice" class="form-control"
-			placeholder="Prix achat" required autofocus 
-			value="{{product.buyingPrice}}" [(ngModel)]="product.buyingPrice">
-	</p>
-	<br>
-	<p>
-		<label for="username" class="sr-only">Prix vente</label> <input
-			type="text"  name="product.sellPrice" class="form-control"
-			placeholder="Prix vente" required autofocus 
-			value="{{product.sellPrice}}" [(ngModel)]="product.sellPrice">
-	</p>
-	<br>
-	<p>
-		<label for="username" class="sr-only">TVA</label> <input
-			type="text"  name="product.TVA" class="form-control"
-			placeholder="TVA" autofocus 
-			value="{{product.TVA}}" [(ngModel)]="product.TVA">
+			type="text" name="name" class="form-control"
+			placeholder="Rechercher" required autofocus 
+			value="{{searchValue}}" [(ngModel)]="searchValue" />
 	</p>
 	<br>
 	<input type="hidden"  name="token" class="form-control-b" value="">
-	<button class="btn btn-lg btn-primary btn-block" type="submit" (click)=addProduct() >Ok</button>
+	<button class="btn btn-lg btn-primary btn-block" type="submit" (click)=getSearchCustomers()>Rechercher</button>
 </form>
+
+<br>
+<br>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">N.B.</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Date N.</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let provider of list">
+      <th scope="row">{{provider.id}}</th>
+      <td>{{provider.name}}</td>
+      <td>{{provider.lastname}}</td>
+      <td>{{provider.firstname}}</td>
+      <td>{{provider.birthday}}</td>
+      <td><a [routerLink]="['/stock/product/add', provider.id]"><i class="material-icons">add</i></a></td>
+    </tr>
+  </tbody>
+</table>
 
 
 <div class="content" role="main">

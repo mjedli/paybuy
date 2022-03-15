@@ -11,6 +11,7 @@ import { SuccessCustomerComponent } from './customer/success/success.component';
 import { ErrorCustomerComponent } from './customer/error/error.component';
 
 import { AddProductComponent } from './stock/add/add.component';
+import { SearchAddProductComponent } from './stock/searchadd/searchadd.component';
 import { SearchProductComponent } from './stock/search/search.component';
 import { EmptyProductComponent } from './stock/empty/empty.component';
 import { DetailsProductComponent } from './stock/details/details.component';
@@ -33,7 +34,8 @@ const routes: Routes = [
  	{ path: 'customer/success', component: SuccessCustomerComponent },
  	{ path: 'customer/error', component: ErrorCustomerComponent },
  	
- 	{ path: 'stock/product/add', component: AddProductComponent },
+ 	{ path: 'stock/product/add', component: SearchAddProductComponent },
+ 	{ path: 'stock/product/add/:idprovider', component: AddProductComponent },
  	{ path: 'stock/product/search', component: SearchProductComponent },
  	{ path: 'stock/product/empty', component: EmptyProductComponent },
  	{ path: 'stock/product/details/:idproduct', component: DetailsProductComponent },
