@@ -31,9 +31,9 @@ export class StockService {
   profit:string;
 
   listProduct  : Product[] = [
-    {id : "144654646546546646", name : "Google Play", amount : "80", buyingPrice : "8.50", sellPrice : "9.50", TVA : "5", profit : "1500"},
-    {id : "2", name : "Google Play Advertising", amount : "180", buyingPrice : "8.50", sellPrice : "19.50", TVA : "7", profit : "1500"},
-    {id : "3", name : "Google Play Game and tools", amount : "1180", buyingPrice : "8.50", sellPrice : "119.50", TVA : "6", profit : "1500"},
+    {id : "144654646546546646", idProvider:"200", name : "Google Play", amount : "80", buyingPrice : "8.50", sellPrice : "9.50", TVA : "5", profit : "1500"},
+    {id : "2", idProvider:"200", name : "Google Play Advertising", amount : "180", buyingPrice : "8.50", sellPrice : "19.50", TVA : "7", profit : "1500"},
+    {id : "3", idProvider:"200", name : "Google Play Game and tools", amount : "1180", buyingPrice : "8.50", sellPrice : "119.50", TVA : "6", profit : "1500"},
   ];
   
   list  : Customer[] = [
