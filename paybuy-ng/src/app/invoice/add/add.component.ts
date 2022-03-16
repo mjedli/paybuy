@@ -24,6 +24,8 @@ export class AddInvoiceComponent implements OnInit {
 	somme:number=0.00;
 	sommeTVA:number=0.00;
 	TVA:number=0.00;
+	paid:number=0.00;
+	credit:number=0.00;
 	
 	customer:Customer = {} as Customer;
 	
@@ -103,6 +105,20 @@ export class AddInvoiceComponent implements OnInit {
 		this.somme=this.somme+this.lineTemp.price;
 		this.sommeTVA=this.sommeTVA+this.lineTemp.price+((this.lineTemp.price*Number(this.lineTemp.TVA))/100);
 		this.listSearchLine = [];
+	}
+	
+	calCredit() {
+		if(this.paid==this.sommeTVA) {
+			this.credit=this.customer.credit;
+		} else {
+			if(this.paid<this.sommeTVA) {
+				this.credit=this.sommeTVA-this.paid+this.customer.credit;
+			} else if(this.paid>this.sommeTVA) {
+				this.credit=this.customer.credit-(this.paid-this.sommeTVA);
+			} 
+		}
+
+		
 	}
 	
 	removeLine(id:string) {

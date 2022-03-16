@@ -97,6 +97,20 @@
 </table>
 </form>
 
+<hr>
+<p>Ajouter la somme payé</p>
+
+<form class="form-signin" method="post" action="">
+	<p>
+		<label for="username" class="sr-only">Somme payé</label> <input
+			type="text"  name="paid" class="form-control"
+			placeholder="Somme payé" required autofocus 
+			value="{{paid}}" [(ngModel)]="paid">
+	</p>
+	<br>
+	<button class="btn btn-lg btn-primary btn-block" type="submit" (click)=calCredit()>Rechercher</button>
+</form>
+
 <br>
 <hr>
 <p>Votre facture.</p>
@@ -153,6 +167,35 @@
       <td><b>{{sommeTVA}}</b></td>
       <td></td>
     </tr>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><b>Payé :</b></td>
+      <td><b>{{paid}}</b></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><b>Crédit :</b></td>
+      <td><b>{{customer.credit}}</b></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><b>N. Crédit :</b></td>
+      <td><b>{{credit}}</b></td>
+      <td></td>
+    </tr>
+    
+    
   </tbody>
 </table>
 
