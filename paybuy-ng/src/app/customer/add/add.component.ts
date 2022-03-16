@@ -13,7 +13,7 @@ export class AddCustomerComponent {
 	constructor(public customerService:CustomerService, public router : Router) { }
 
 	currentCustomer:Customer  =  
-	{id : '', name : '', firstname : '', lastname : '', birthday : '', mobile : '', address : ''};
+	{id : '', name : '', firstname : '', lastname : '', birthday : '', mobile : '', address : '', credit:0};
 	
 	
 

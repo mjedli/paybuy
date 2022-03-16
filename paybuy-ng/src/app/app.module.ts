@@ -32,6 +32,7 @@ import { SuccessProductComponent } from './stock/success/success.component';
 import { ErrorProductComponent } from './stock/error/error.component';
 
 import { SearchAddInvoiceComponent } from './invoice/searchadd/searchadd.component';
+import { AddInvoiceComponent } from './invoice/add/add.component';
 
 import { CustomerService } from './customer/service.component';
 import { StockService } from './stock/service.component';
@@ -61,7 +62,8 @@ import { ProviderService } from './provider/service.component';
     SuccessProductComponent,
     ErrorProductComponent,
     
-    SearchAddInvoiceComponent
+    SearchAddInvoiceComponent,
+    AddInvoiceComponent
     
   ],
   imports: [

@@ -21,6 +21,8 @@ import { SuccessProductComponent } from './stock/success/success.component';
 import { ErrorProductComponent } from './stock/error/error.component';
 
 import { SearchAddInvoiceComponent } from './invoice/searchadd/searchadd.component';
+import { AddInvoiceComponent } from './invoice/add/add.component';
+
 
 const routes: Routes = [
 	
@@ -46,6 +48,8 @@ const routes: Routes = [
  	{ path: 'stock/product/error', component: ErrorProductComponent },
  	
  	{ path: 'invoice/add', component: SearchAddInvoiceComponent },
+ 	{ path: 'invoice/add/:idcustomer', component: AddInvoiceComponent },
+ 	
  
 ];
 

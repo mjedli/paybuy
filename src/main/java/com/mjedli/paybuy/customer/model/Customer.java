@@ -31,6 +31,7 @@ public class Customer {
 	private String mobile = "";
 	private String address = "";
 
+	private String credit = "";
 	
 	public long getId() {
 		return id;
@@ -73,6 +74,12 @@ public class Customer {
 	}
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	public String getCredit() {
+		return credit;
+	}
+	public void setCredit(String credit) {
+		this.credit = credit;
 	}
 
 }

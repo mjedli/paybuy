@@ -14,11 +14,11 @@ import { Provider } from '../../provider/model/provider';
 export class AddProductComponent implements OnInit {
 
 	constructor(public stockService:StockService, public providerService:ProviderService,
-				public router : Router,  private route: ActivatedRoute,) { }
+				public router : Router,  private route: ActivatedRoute) { }
 
 	product:Product = {} as Product;
 	
-	provider:Provider = {} as Provider
+	provider:Provider = {} as Provider;
 	
 	private routeSub: Subscription;
 	

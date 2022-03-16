@@ -6,4 +6,5 @@ export class Customer {
   birthday:string;
   mobile:string;
   address:string;
+  credit:number;
 }

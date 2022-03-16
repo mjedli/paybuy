@@ -27,9 +27,25 @@
 <hr>
 <h3>Ajouter facture</h3>
 <hr>
-<p>Rechercher le client de votre facture.</p>
+<p>Traiter votre facture et ajouter les produits.</p>
 <br>
 <br>
+
+<hr>
+<p>Ajouter la date</p>
+
+<form class="form-signin" method="post" action="">
+	<p>
+		<label for="username" class="sr-only">Date de naissance</label> <input
+			type="date"  name="currentDate" class="form-control"
+			placeholder="Date de naissance" required autofocus 
+			value="{{currentDate | date:'yyyy-MM-dd'}}" [(ngModel)]="currentDate">
+	</p>
+	<br>
+</form>
+
+<hr>
+<p>Ajouter les produits</p>
 
 <form class="form-signin" method="post" action="">
 	<p>
@@ -46,28 +62,102 @@
 <br>
 <br>
 
+<form class="form-signin" method="post" action="">
 <table class="table">
   <thead class="thead-light">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">N.B.</th>
       <th scope="col">Nom</th>
-      <th scope="col">Prénom</th>
-      <th scope="col">Date N.</th>
-      <th scope="col"></th>
+      <th scope="col">Quantité</th>
+      <th scope="col">Prix U.</th>
+      <th scope="col">TVA</th>
+      <th scope="col"><a (click)="resetSearchLine()"><i class="material-icons">refresh</i></a></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let customer of list">
-      <th scope="row">{{customer.id}}</th>
-      <td>{{customer.name}}</td>
-      <td>{{customer.lastname}}</td>
-      <td>{{customer.firstname}}</td>
-      <td>{{customer.birthday}}</td>
-      <td><a [routerLink]="['/invoice/add', customer.id]"><i class="material-icons">add</i></a></td>
+    <tr *ngFor="let product of listSearchLine">
+      <th scope="row">{{product.id}}</th>
+      <td>{{product.name}}</td>
+      <td><input
+			type="text" name="product.amount" class="form-control"
+			placeholder="Quantité" required autofocus 
+			value="{{product.amount}}" [(ngModel)]="product.amount" /></td>
+      <td><input
+			type="text" name="product.sellPrice" class="form-control"
+			placeholder="Prix Unitaire" required autofocus 
+			value="{{product.sellPrice}}" [(ngModel)]="product.sellPrice" /></td>
+      <td><input
+			type="text" name="{{product.id}}" class="form-control"
+			placeholder="TVA" required autofocus 
+			value="{{product.TVA}}" [(ngModel)]="product.TVA" />
+	</td>
+      <td><a (click)="saveLine(product.id)"><i class="material-icons">add</i></a></td>
     </tr>
   </tbody>
 </table>
+</form>
+
+<br>
+<hr>
+<p>Votre facture.</p>
+<br>
+
+<!-- start print zone -->
+<div id="modal-body-id" style="margin: 0px">
+
+<p>Date : {{currentDate | date:'yyyy-MM-dd'}}</p>
+<p>ID Client : {{customer.id}}</p>
+<p>Client : {{customer.name}} - {{customer.firstname}} {{customer.lastname}}</p>
+<br>
+<br>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Quantité</th>
+      <th scope="col">Prix U.</th>
+      <th scope="col">TVA</th>
+      <th scope="col">Prix HT</th>
+      <th scope="col">
+      	<a href="#" (click)="onPrint('modal-body-id')"><i class="material-icons">print</i></a>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of listline">
+      <th scope="row">{{product.id}}</th>
+      <td>{{product.name}}</td>
+      <td>{{product.amount}}</td>
+      <td>{{product.sellPrice}}</td>
+      <td>{{product.TVA}}</td>
+      <td>{{product.price}}</td>
+      <td><a (click)="removeLine(product.id)"><i class="material-icons">remove</i></a></td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><b></b></td>
+      <td><b>{{somme}}</b></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><b>S. TTC :</b></td>
+      <td><b>{{sommeTVA}}</b></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- end print zone -->
+</div>
 
 <div class="content" role="main">
   <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">

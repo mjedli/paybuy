@@ -5,4 +5,5 @@ export class Line {
   amount:string;
   sellPrice:string;
   TVA:string;
+  price:number;
 }
