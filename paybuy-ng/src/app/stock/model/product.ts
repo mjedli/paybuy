@@ -5,6 +5,6 @@ export class Product {
   amount:string;
   buyingPrice:string;
   sellPrice:string;
-  TVA:string;
+  tva:string;
   profit:string;
 }

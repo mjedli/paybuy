@@ -21,10 +21,16 @@ public class Product {
 	  
 	private String buyingPrice = "";
 	private String sellPrice = "";
-	private String TVA = "";
-
+	private String tva = "";
 	private String profit = "";
+	
+	public String getTva() {
+		return tva;
+	}
 
+	public void setTva(String tva) {
+		this.tva = tva;
+	}
 	public long getId() {
 		return id;
 	}
@@ -71,14 +77,6 @@ public class Product {
 
 	public void setSellPrice(String sellPrice) {
 		this.sellPrice = sellPrice;
-	}
-
-	public String getTVA() {
-		return TVA;
-	}
-
-	public void setTVA(String tVA) {
-		TVA = tVA;
 	}
 
 	public String getProfit() {

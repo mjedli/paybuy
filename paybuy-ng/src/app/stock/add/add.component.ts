@@ -38,8 +38,19 @@ export class AddProductComponent implements OnInit {
 	}
 	
   	addProduct() {
-		this.stockService.addProductOLD(this.product);
-		this.router.navigateByUrl("stock/product/success");
+		if(this.product.name != '') {
+			this.stockService.addProduct(this.product).subscribe({
+		        next: data => {
+					this.router.navigateByUrl("stock/product/success");
+		            //this.postId = data.id;
+		        },
+		        error: error => {
+		            console.error('There was an error!', error);
+		            this.router.navigateByUrl("stock/product/error");
+		        }
+	      });
+		}
+		
  	}
 
 }

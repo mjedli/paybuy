@@ -22,18 +22,10 @@ export class StockService {
     	this.usersUrl = 'http://localhost:8080/paybay/customer';
  	}
 
-  id:string;
-  name:string;
-  amount:string;
-  buyingPrice:string;
-  sellPrice:string;
-  TVA:string;
-  profit:string;
-
   listProduct  : Product[] = [
-    {id : "144654646546546646", idProvider:"200", name : "Google Play", amount : "80", buyingPrice : "8.50", sellPrice : "9.50", TVA : "5", profit : "1500"},
-    {id : "2", idProvider:"200", name : "Google Play Advertising", amount : "180", buyingPrice : "8.50", sellPrice : "19.50", TVA : "7", profit : "1500"},
-    {id : "3", idProvider:"200", name : "Google Play Game and tools", amount : "1180", buyingPrice : "8.50", sellPrice : "119.50", TVA : "6", profit : "1500"},
+    {id : "144654646546546646", idProvider:"200", name : "Google Play", amount : "80", buyingPrice : "8.50", sellPrice : "9.50", tva : "5", profit : "1500"},
+    {id : "2", idProvider:"200", name : "Google Play Advertising", amount : "180", buyingPrice : "8.50", sellPrice : "19.50", tva : "7", profit : "1500"},
+    {id : "3", idProvider:"200", name : "Google Play Game and tools", amount : "1180", buyingPrice : "8.50", sellPrice : "119.50", tva : "6", profit : "1500"},
   ];
   
   list  : Customer[] = [
@@ -91,6 +83,10 @@ export class StockService {
     customer.id=currentId;
     this.listProduct.push(customer);
   }
+
+    public addProduct(product: Product):Observable<Product> {
+       	return this.http.post<Product>("http://localhost:8080/paybay/stock/add", product, httpOptions);
+    }
 
   /*
   * addComponent
