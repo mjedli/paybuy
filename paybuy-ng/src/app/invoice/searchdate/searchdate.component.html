@@ -25,18 +25,30 @@
 <div class="container-g">
 
 <hr>
-<h3>Ajouter facture</h3>
+<h3>Rechercher facture</h3>
 <hr>
-<p>Rechercher le client de votre facture.</p>
+<p>Rechercher la facture de votre client par date.</p>
+<br>
+<br>
+
+<p>ID Client : {{customer.id}}</p>
+<p>Client : {{customer.name}} - {{customer.firstname}} {{customer.lastname}}</p>
 <br>
 <br>
 
 <form class="form-signin" method="post" action="">
 	<p>
-		<label for="username" class="sr-only">Nom</label> <input
-			type="text" name="name" class="form-control"
-			placeholder="Rechercher" required autofocus 
-			value="{{searchValue}}" [(ngModel)]="searchValue" />
+		<label for="username" class="sr-only">Date de naissance</label> <input
+			type="date"  name="currentDateStart" class="form-control"
+			placeholder="Date de début" required autofocus 
+			value="{{currentDateStart | date:'yyyy-MM-dd'}}" [(ngModel)]="currentDateStart">
+	</p>
+	<br>
+	<p>
+		<label for="username" class="sr-only">Date de naissance</label> <input
+			type="date"  name="currentDateEnd" class="form-control"
+			placeholder="Date de fin" required autofocus 
+			value="{{currentDateEnd | date:'yyyy-MM-dd'}}" [(ngModel)]="currentDateEnd">
 	</p>
 	<br>
 	<input type="hidden"  name="token" class="form-control-b" value="">
@@ -50,21 +62,15 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">N.B.</th>
-      <th scope="col">Nom</th>
-      <th scope="col">Prénom</th>
-      <th scope="col">Date N.</th>
+      <th scope="col">Date</th>
       <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let customer of list">
-      <th scope="row">{{customer.id}}</th>
-      <td>{{customer.name}}</td>
-      <td>{{customer.lastname}}</td>
-      <td>{{customer.firstname}}</td>
-      <td>{{customer.birthday}}</td>
-      <td><a [routerLink]="['/invoice/add', customer.id]"><i class="material-icons">add</i></a></td>
+    <tr *ngFor="let invoice of list">
+      <th scope="row">{{invoice.id}}</th>
+      <td>{{invoice.date | date:'yyyy-MM-dd'}}</td>
+      <td><a [routerLink]="['/invoice/', customer.id, invoice.id]"><i class="material-icons">search</i></a></td>
     </tr>
   </tbody>
 </table>

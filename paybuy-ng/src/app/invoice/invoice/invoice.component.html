@@ -25,24 +25,18 @@
 <div class="container-g">
 
 <hr>
-<h3>Ajouter facture</h3>
+<h3>Votre facture</h3>
 <hr>
-<p>Rechercher le client de votre facture.</p>
+<p>La facture de votre client.</p>
 <br>
 <br>
+<a href="#" (click)="onPrint('modal-body-id')"><i class="material-icons">print</i></a>
+<!-- start print zone -->
+<div id="modal-body-id" style="margin: 0px">
 
-<form class="form-signin" method="post" action="">
-	<p>
-		<label for="username" class="sr-only">Nom</label> <input
-			type="text" name="name" class="form-control"
-			placeholder="Rechercher" required autofocus 
-			value="{{searchValue}}" [(ngModel)]="searchValue" />
-	</p>
-	<br>
-	<input type="hidden"  name="token" class="form-control-b" value="">
-	<button class="btn btn-lg btn-primary btn-block" type="submit" (click)=getSearchCustomers()>Rechercher</button>
-</form>
-
+<p>Date : {{currentDate | date:'yyyy-MM-dd'}}</p>
+<p>ID Client : {{customer.id}}</p>
+<p>Client : {{customer.name}} - {{customer.firstname}} {{customer.lastname}}</p>
 <br>
 <br>
 
@@ -50,24 +44,61 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">N.B.</th>
       <th scope="col">Nom</th>
-      <th scope="col">Prénom</th>
-      <th scope="col">Date N.</th>
-      <th scope="col"></th>
+      <th scope="col">Quantité</th>
+      <th scope="col">Prix U.</th>
+      <th scope="col">TVA</th>
+      <th scope="col">Prix HT</th>
+
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let customer of list">
-      <th scope="row">{{customer.id}}</th>
-      <td>{{customer.name}}</td>
-      <td>{{customer.lastname}}</td>
-      <td>{{customer.firstname}}</td>
-      <td>{{customer.birthday}}</td>
-      <td><a [routerLink]="['/invoice/add', customer.id]"><i class="material-icons">add</i></a></td>
+    <tr *ngFor="let product of listline">
+      <th scope="row">{{product.id}}</th>
+      <td>{{product.name}}</td>
+      <td>{{product.amount}}</td>
+      <td>{{product.sellPrice}}</td>
+      <td>{{product.TVA}}</td>
+      <td>{{product.price}}</td>
     </tr>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><b></b></td>
+      <td><b>{{somme}}</b></td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><b>S. TTC :</b></td>
+      <td><b>{{sommeTVA}}</b></td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><b>Payé :</b></td>
+      <td><b>{{paid}}</b></td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><b>Crédit :</b></td>
+      <td><b>{{customer.credit}}</b></td>
+    </tr> 
+    
   </tbody>
 </table>
+
+<!-- end print zone -->
+</div>
 
 <div class="content" role="main">
   <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">

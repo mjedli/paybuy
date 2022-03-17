@@ -3,8 +3,9 @@ import { Line } from '../model/line';
 export class Invoice {
   id:string;
   idCustomer:string;
-  date:string;
+  date:Date;
   listline:Line[];
-  total:string;
-  totalTva:string;
+  total:number;
+  totalTva:number;
+  credit:number;
 }

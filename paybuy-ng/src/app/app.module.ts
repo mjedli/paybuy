@@ -32,11 +32,17 @@ import { SuccessProductComponent } from './stock/success/success.component';
 import { ErrorProductComponent } from './stock/error/error.component';
 
 import { SearchAddInvoiceComponent } from './invoice/searchadd/searchadd.component';
+import { SearchInvoiceComponent } from './invoice/search/search.component';
+import { SearchDateInvoiceComponent } from './invoice/searchdate/searchdate.component';
 import { AddInvoiceComponent } from './invoice/add/add.component';
+import { SuccessInvoiceComponent } from './invoice/success/success.component';
+import { InvoiceComponent } from './invoice/invoice/invoice.component';
+
 
 import { CustomerService } from './customer/service.component';
 import { StockService } from './stock/service.component';
 import { ProviderService } from './provider/service.component';
+import { InvoiceService } from './invoice/service.component';
 
 
 
@@ -63,14 +69,18 @@ import { ProviderService } from './provider/service.component';
     ErrorProductComponent,
     
     SearchAddInvoiceComponent,
-    AddInvoiceComponent
+    AddInvoiceComponent,
+    SuccessInvoiceComponent,
+    SearchInvoiceComponent,
+    SearchDateInvoiceComponent,
+    InvoiceComponent
     
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule,
     AppRoutingModule
   ],
-  providers: [CustomerService, StockService, ProviderService],
+  providers: [CustomerService, StockService, ProviderService, InvoiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

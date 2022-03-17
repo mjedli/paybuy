@@ -10,11 +10,11 @@ import { Line } from '../model/line';
 import { Invoice } from '../model/invoice';
 
 @Component({
-  selector: 'app-addinvoice',
-  templateUrl: 'add.component.html',
-  styleUrls: ['add.component.css'],
+  selector: 'app-invoice',
+  templateUrl: 'invoice.component.html',
+  styleUrls: ['invoice.component.css'],
 })
-export class AddInvoiceComponent implements OnInit {
+export class InvoiceComponent implements OnInit {
 
 	constructor(public stockService:StockService, public cutomerService:CustomerService,
 				public router : Router, private route: ActivatedRoute,
@@ -36,14 +36,7 @@ export class AddInvoiceComponent implements OnInit {
 	
 	lineTemp:Line = {} as Line;
 	
-	list:Product[] = [
-	    //{id : "1654646546546546464", name : "Google", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-	    //{id : "2", name : "Yahoo", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-	];
-	
 	listline:Line[] = [];
-	
-	listSearchLine:Line[] = [];
 	
 	private routeSub: Subscription;
 	
@@ -51,26 +44,12 @@ export class AddInvoiceComponent implements OnInit {
 		
 		this.routeSub = this.route.params.subscribe(params => {
     		this.cutomerService.setCurrentIdSelected(params['idcustomer']);
+    		this.invoiceService.setCurrentIdSelected(params['idinvoice']);
   		});
 		
 		this.getCustomerById();
-  		this.getSearchCustomers();
+  		this.geInvoiceById();
   	}
-  	
-  	saveInvoice() {
-		this.invoice = {
-		  id:"",
-		  idCustomer:this.customer.id,
-		  date:this.currentDate,
-		  listline:this.listline,
-		  total:this.somme,
-		  totalTva:this.sommeTVA,
-		  credit:this.credit
-		}
-		
-		this.invoiceService.addInvoice(this.invoice);
-		this.router.navigateByUrl("invoice/success");
-	}
 	
 	onPrint(divName:string) {
 		 /*
@@ -112,68 +91,18 @@ export class AddInvoiceComponent implements OnInit {
 	    
 	}
 	
-	resetSearchLine() {
-		this.listSearchLine = [];
-	}
-	
-	saveLine(id:string) {
-		this.lineTemp = this.listSearchLine.find(x => x.id == id)!;
-		this.lineTemp.price = Number(this.lineTemp.amount)*Number(this.lineTemp.sellPrice);
-		this.listline.push(this.lineTemp);
-		this.somme=this.somme+this.lineTemp.price;
-		this.sommeTVA=this.sommeTVA+this.lineTemp.price+((this.lineTemp.price*Number(this.lineTemp.TVA))/100);
-		this.listSearchLine = [];
-	}
-	
-	calCredit() {
-		if(this.paid==this.sommeTVA) {
-			this.credit=this.customer.credit;
-		} else {
-			if(this.paid<this.sommeTVA) {
-				this.credit=this.sommeTVA-this.paid+this.customer.credit;
-			} else if(this.paid>this.sommeTVA) {
-				this.credit=this.customer.credit-(this.paid-this.sommeTVA);
-			} 
-		}
-
-		
-	}
-	
-	removeLine(id:string) {
-		
-		this.lineTemp = this.listline.find(x => x.id == id)!;
-		this.somme=this.somme-this.lineTemp.price;
-		this.sommeTVA=this.sommeTVA-this.lineTemp.price-((this.lineTemp.price*Number(this.lineTemp.TVA))/100);
-		
-		const index = this.listline.findIndex((e) => e.id === id);
-
-	    if (index !== -1) {
-	        this.listline.splice(index, 1);
-	    }
-	}
-	
 	getCustomerById() {
 		this.customer=this.cutomerService.getCustomerByCurrentIdOLD();
 	}
 	
-  	getSearchCustomers() {
-		if(this.searchValue != "") {
-			 this.stockService.setSearchValue(this.searchValue);
-			 this.list=this.stockService.getSearchCustomersOLD();
-			 
-			for (var i = 0; i < this.list.length; i++) {
-
-				this.lineTemp = { id:this.list[i].id,
-								  idProvider:this.list[i].idProvider,
-								  name:this.list[i].name,
-								  amount:"",
-								  sellPrice:this.list[i].sellPrice,
-								  TVA:this.list[i].TVA,
-								  price:0,	
-								};
-			  	this.listSearchLine.push(this.lineTemp);
-			}
-		}
+  	geInvoiceById() {
+		this.invoice = this.invoiceService.getInvoiceByCurrentIdOLD();
+		
+		this.currentDate = this.invoice.date;
+		this.somme = this.invoice.total;
+		this.sommeTVA = this.invoice.totalTva;
+		this.listline = this.invoice.listline;
+		
  	}
 
 }

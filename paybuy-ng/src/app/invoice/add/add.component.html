@@ -13,7 +13,7 @@
 	  		<span>Ajouter</span>
 	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
 	</a>
-	<a class="card"  rel="noopener" routerLink="/stock/product/search" routerLinkActive="active">
+	<a class="card"  rel="noopener" routerLink="/invoice/search" routerLinkActive="active">
 		<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>  
 	  		<span>Rechercher</span>
 	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
@@ -32,7 +32,7 @@
 <br>
 
 <hr>
-<p>Ajouter la date</p>
+<p>Ajouter la date.</p>
 
 <form class="form-signin" method="post" action="">
 	<p>
@@ -45,7 +45,7 @@
 </form>
 
 <hr>
-<p>Ajouter les produits</p>
+<p>Ajouter les produits.</p>
 
 <form class="form-signin" method="post" action="">
 	<p>
@@ -83,7 +83,7 @@
 			placeholder="Quantité" required autofocus 
 			value="{{product.amount}}" [(ngModel)]="product.amount" /></td>
       <td><input
-			type="text" name="product.sellPrice" class="form-control"
+			type="text" name="{{product.id}}sp" class="form-control"
 			placeholder="Prix Unitaire" required autofocus 
 			value="{{product.sellPrice}}" [(ngModel)]="product.sellPrice" /></td>
       <td><input
@@ -98,7 +98,7 @@
 </form>
 
 <hr>
-<p>Ajouter la somme payé</p>
+<p>Ajouter la somme payé.</p>
 
 <form class="form-signin" method="post" action="">
 	<p>
@@ -108,7 +108,7 @@
 			value="{{paid}}" [(ngModel)]="paid">
 	</p>
 	<br>
-	<button class="btn btn-lg btn-primary btn-block" type="submit" (click)=calCredit()>Rechercher</button>
+	<button class="btn btn-lg btn-primary btn-block" type="submit" (click)=calCredit()>Valider</button>
 </form>
 
 <br>
@@ -201,6 +201,11 @@
 
 <!-- end print zone -->
 </div>
+
+<form class="form-signin" method="post" action="">
+	<br>
+	<button class="btn btn-lg btn-primary btn-block" type="submit" (click)=saveInvoice()>Valider</button>
+</form>
 
 <div class="content" role="main">
   <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">

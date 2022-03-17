@@ -25,9 +25,9 @@
 <div class="container-g">
 
 <hr>
-<h3>Ajouter facture</h3>
+<h3>Rechercher facture</h3>
 <hr>
-<p>Rechercher le client de votre facture.</p>
+<p>Rechercher la facture de votre client.</p>
 <br>
 <br>
 
@@ -64,7 +64,7 @@
       <td>{{customer.lastname}}</td>
       <td>{{customer.firstname}}</td>
       <td>{{customer.birthday}}</td>
-      <td><a [routerLink]="['/invoice/add', customer.id]"><i class="material-icons">add</i></a></td>
+      <td><a [routerLink]="['/invoice/search', customer.id]"><i class="material-icons">search</i></a></td>
     </tr>
   </tbody>
 </table>
