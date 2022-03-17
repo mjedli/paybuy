@@ -29,6 +29,7 @@ export class InvoiceComponent implements OnInit {
 	TVA:number=0.00;
 	paid:number=0.00;
 	credit:number=0.00;
+	newCredit:number=0.00;
 	
 	customer:Customer = {} as Customer;
 	
@@ -101,6 +102,9 @@ export class InvoiceComponent implements OnInit {
 		this.currentDate = this.invoice.date;
 		this.somme = this.invoice.total;
 		this.sommeTVA = this.invoice.totalTva;
+		this.paid=this.invoice.paid;
+		this.credit=this.invoice.credit;
+		this.newCredit=this.invoice.newCredit;
 		this.listline = this.invoice.listline;
 		
  	}

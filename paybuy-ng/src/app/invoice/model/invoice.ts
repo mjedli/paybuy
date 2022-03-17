@@ -8,4 +8,6 @@ export class Invoice {
   total:number;
   totalTva:number;
   credit:number;
+  newCredit:number;
+  paid:number;
 }

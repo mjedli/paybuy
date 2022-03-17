@@ -65,7 +65,9 @@ export class AddInvoiceComponent implements OnInit {
 		  listline:this.listline,
 		  total:this.somme,
 		  totalTva:this.sommeTVA,
-		  credit:this.credit
+		  credit:this.customer.credit,
+		  newCredit:this.credit,
+		  paid:this.paid
 		}
 		
 		this.invoiceService.addInvoice(this.invoice);

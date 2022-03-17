@@ -24,11 +24,11 @@ export class InvoiceService {
  	}
 
   listInvoice  : Invoice[] = [
-    {id:"1", idCustomer : "14646464654645464", date : new Date("2022-02-13"), total : 3250, totalTva : 3250, credit:3520.50,
+    {id:"1", idCustomer : "14646464654645464", date : new Date("2022-02-13"), total : 3250, totalTva : 3250, credit:3520.50, newCredit:3500, paid:3520,
     listline :    [ {id : "2", idProvider : "200", name : "Google Play Advertising", amount : "180",  sellPrice : "19.50", TVA : "7", price:250},
     {id : "3", idProvider : "200", name : "Google Play Game and tools", amount : "1180",  sellPrice : "119.50", TVA : "6", price:350}]},
     
-    {id:"2", idCustomer : "2", date : new Date("2022-02-13"), listline : [], total : 4250, totalTva : 3250, credit:0}
+    {id:"2", idCustomer : "2", date : new Date("2022-02-13"), listline : [], total : 4250, totalTva : 3250, credit:0, newCredit:3500, paid:0}
   ];
   
   list  : Customer[] = [
