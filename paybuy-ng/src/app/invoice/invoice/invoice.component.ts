@@ -53,42 +53,33 @@ export class InvoiceComponent implements OnInit {
   	}
 	
 	onPrint(divName:string) {
-		 /*
-	     const printContents = document.getElementById(divName)!.innerHTML;
-	     const originalContents = document.body.innerHTML;
-	     document.body.innerHTML = printContents;
-	     window.print();
-	     
-	     document.body.innerHTML = originalContents;
-	     return false;
-	     */
-	        var mywindow = window.open('', 'PRINT');
+        var mywindow = window.open('', 'PRINT');
+    
+        mywindow!.document.write('<html lang="fr"><head><title></title>');
+        mywindow!.document.write('<style>');
         
-            mywindow!.document.write('<html lang="fr"><head><title></title>');
-            mywindow!.document.write('<style>');
-            
-            mywindow!.document.write('@media print{@page {size: A4; margin-top: 0;margin-bottom: 0;}body  {padding-top: 72px;padding-bottom: 72px ;}}'); 
+        mywindow!.document.write('@media print{@page {size: A4; margin-top: 0;margin-bottom: 0;}body  {padding-top: 72px;padding-bottom: 72px ;}}'); 
 
-            mywindow!.document.write('.table .thead-light th {color: #495057;background-color: #e9ecef;border-color: #dee2e6;}');
-            mywindow!.document.write('.table thead th {vertical-align: bottom;border-bottom: 2px solid #dee2e6;border-bottom-color: rgb(222, 226, 230);}');
-            mywindow!.document.write('.table td, .table th {padding: .75rem;vertical-align: top;border-top: 1px solid #dee2e6;border-top-color: rgb(222, 226, 230);');
-            
-            mywindow!.document.write('th {text-align: inherit;} .table {color: #212529;} table {border-collapse: collapse;}');
-            mywindow!.document.write(".material-icons {font-family: 'Material Icons';font-weight: normal;font-style: normal;font-size: 24px;line-height: 1;letter-spacing: normal;text-transform: none;");
-  			mywindow!.document.write("display: inline-block;white-space: nowrap;word-wrap: normal;direction: ltr;-moz-font-feature-settings: 'liga';-moz-osx-font-smoothing: grayscale;}");
-			mywindow!.document.write('</style>');
-			//mywindow!.document.write('<link rel="stylesheet" href="content/bootstrap.min.css"/>');
-			//mywindow!.document.write('<link href="content/materialicons.css" type="text/css" rel="stylesheet">');
-            mywindow!.document.write('</head><body >');
-            mywindow!.document.write(document.getElementById(divName)!.innerHTML);
-            mywindow!.document.write('</body></html>');
+        mywindow!.document.write('.table .thead-light th {color: #495057;background-color: #e9ecef;border-color: #dee2e6;}');
+        mywindow!.document.write('.table thead th {vertical-align: bottom;border-bottom: 2px solid #dee2e6;border-bottom-color: rgb(222, 226, 230);}');
+        mywindow!.document.write('.table td, .table th {padding: .10rem;vertical-align: top;border-top: 1px solid #dee2e6;border-top-color: rgb(222, 226, 230);');
         
-            mywindow!.document.close(); // necessary for IE >= 10
-            mywindow!.focus(); // necessary for IE >= 10*/
+        mywindow!.document.write('th {text-align: inherit;} .table {color: #212529;} table {border-collapse: collapse;}');
+        mywindow!.document.write(".material-icons {font-family: 'Material Icons';font-weight: normal;font-style: normal;font-size: 24px;line-height: 1;letter-spacing: normal;text-transform: none;");
+		mywindow!.document.write("display: inline-block;white-space: nowrap;word-wrap: normal;direction: ltr;-moz-font-feature-settings: 'liga';-moz-osx-font-smoothing: grayscale;}");
+		mywindow!.document.write('</style>');
+		//mywindow!.document.write('<link rel="stylesheet" href="content/bootstrap.min.css"/>');
+		//mywindow!.document.write('<link href="content/materialicons.css" type="text/css" rel="stylesheet">');
+        mywindow!.document.write('</head><body >');
+        mywindow!.document.write(document.getElementById(divName)!.innerHTML);
+        mywindow!.document.write('</body></html>');
+    
+        mywindow!.document.close(); // necessary for IE >= 10
+        mywindow!.focus(); // necessary for IE >= 10*/
 
-            mywindow!.print();
-            mywindow!.close();
-            return false;
+        mywindow!.print();
+        mywindow!.close();
+        return false;
 	    
 	}
 	
