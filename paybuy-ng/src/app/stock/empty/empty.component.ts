@@ -15,7 +15,7 @@ export class EmptyProductComponent implements OnInit {
 	searchValue:string="";
 	
 	list:Product[] = [
-		{id : "1", idProvider:"200", name : "Google Play", amount : "80", buyingPrice : "8.50", sellPrice : "9.50", TVA : "5", profit : "1500"},
+		{id : "1", idProvider:"200", name : "Google Play", amount : "80", buyingPrice : "8.50", sellPrice : "9.50", tva : "5", profit : "1500"},
 	    //{id : "1654646546546546464", name : "Google", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
 	    //{id : "2", name : "Yahoo", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
 	];

@@ -170,7 +170,7 @@ export class AddInvoiceComponent implements OnInit {
 								  name:this.list[i].name,
 								  amount:"",
 								  sellPrice:this.list[i].sellPrice,
-								  TVA:this.list[i].TVA,
+								  TVA:this.list[i].tva,
 								  price:0,	
 								};
 			  	this.listSearchLine.push(this.lineTemp);

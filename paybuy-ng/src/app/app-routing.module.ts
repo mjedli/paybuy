@@ -27,6 +27,14 @@ import { SuccessInvoiceComponent } from './invoice/success/success.component';
 import { SearchInvoiceComponent } from './invoice/search/search.component';
 import { InvoiceComponent } from './invoice/invoice/invoice.component';
 
+import { AddProviderComponent } from './provider/add/add.component';
+import { SuccessProviderComponent } from './provider/success/success.component'
+import { ErrorProviderComponent } from './provider/error/error.component';
+import { SearchProviderComponent } from './provider/search/search.component';
+import { DetailsProviderComponent } from './provider/details/details.component';
+import { DeleteProviderComponent } from './provider/delete/delete.component';
+import { UpdateProviderComponent } from './provider/update/update.component';
+
 const routes: Routes = [
 	
 	{ path: '', redirectTo:'menu', pathMatch: 'full' },
@@ -40,6 +48,14 @@ const routes: Routes = [
  	{ path: 'customer/success', component: SuccessCustomerComponent },
  	{ path: 'customer/error', component: ErrorCustomerComponent },
  	
+ 	{ path: 'provider/add', component: AddProviderComponent },
+ 	{ path: 'provider/search', component: SearchProviderComponent },
+ 	{ path: 'provider/success', component: SuccessProviderComponent },
+ 	{ path: 'provider/error', component: ErrorProviderComponent },
+ 	{ path: 'provider/details/:idprovider', component: DetailsProviderComponent },
+  	{ path: 'provider/delete/:idprovider', component: DeleteProviderComponent },
+  	{ path: 'provider/update/:idprovider', component: UpdateProviderComponent },
+  		 	 	
  	{ path: 'stock/product/add', component: SearchAddProductComponent },
  	{ path: 'stock/product/add/:idprovider', component: AddProductComponent },
  	{ path: 'stock/product/search', component: SearchProductComponent },

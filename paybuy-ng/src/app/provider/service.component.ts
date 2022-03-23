@@ -73,8 +73,8 @@ export class ProviderService {
   /*
   * addComponent
   */
-  public addCustomer(customer:Customer):Observable<Customer> {
-    return this.http.post<Customer>("http://localhost:8080/paybay/customer/add", customer, httpOptions);
+  public addProvider(provider:Provider):Observable<Provider> {
+    return this.http.post<Provider>("http://localhost:8080/paybay/customer/add", provider, httpOptions);
 
   }
   
@@ -85,8 +85,8 @@ export class ProviderService {
     return this.listProvider.find(x => x.id == this.currentIdSelected)!;
   }
   
-  public getCustomerByCurrentId():Observable<Customer> {
-    return this.http.get<Customer>("http://localhost:8080/paybay/customer/"+this.currentIdSelected);
+  public getProviderByCurrentId():Observable<Provider> {
+    return this.http.get<Provider>("http://localhost:8080/paybay/customer/"+this.currentIdSelected);
   }
 
   /*
@@ -102,8 +102,8 @@ export class ProviderService {
     }
   }
 
-  public modifiyCustomer(customer:Customer):Observable<Customer> {
-    return this.http.post<Customer>("http://localhost:8080/paybay/customer/update", customer, httpOptions);
+  public modifiyProvider(provider:Provider):Observable<Provider> {
+    return this.http.post<Provider>("http://localhost:8080/paybay/customer/update", provider, httpOptions);
   }
 
   /*
@@ -118,8 +118,8 @@ export class ProviderService {
     this.currentIdSelected = "0"; 
   }
 
-  public removeCustomer(customer:Customer):Observable<number> {
-    return this.http.post<number>("http://localhost:8080/paybay/customer/remove", customer, httpOptions);
+  public removeProvider(provider:Provider):Observable<number> {
+    return this.http.post<number>("http://localhost:8080/paybay/customer/remove", provider, httpOptions);
   }
 
   /*
@@ -141,7 +141,7 @@ export class ProviderService {
     /*
   * getAllComponent
   */
-  public getSearchCustomers():Observable<Customer[]> {
-    return this.http.post<Customer[]>("http://localhost:8080/paybay/customer", this.searchValue, httpOptions);
+  public getSearchProviders():Observable<Provider[]> {
+    return this.http.post<Provider[]>("http://localhost:8080/paybay/customer", this.searchValue, httpOptions);
   }
 }

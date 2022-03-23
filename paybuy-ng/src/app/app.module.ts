@@ -38,6 +38,13 @@ import { AddInvoiceComponent } from './invoice/add/add.component';
 import { SuccessInvoiceComponent } from './invoice/success/success.component';
 import { InvoiceComponent } from './invoice/invoice/invoice.component';
 
+import { AddProviderComponent } from './provider/add/add.component';
+import { SuccessProviderComponent } from './provider/success/success.component'
+import { ErrorProviderComponent } from './provider/error/error.component';
+import { SearchProviderComponent } from './provider/search/search.component';
+import { DetailsProviderComponent } from './provider/details/details.component';
+import { DeleteProviderComponent } from './provider/delete/delete.component';
+import { UpdateProviderComponent } from './provider/update/update.component';
 
 import { CustomerService } from './customer/service.component';
 import { StockService } from './stock/service.component';
@@ -73,7 +80,15 @@ import { InvoiceService } from './invoice/service.component';
     SuccessInvoiceComponent,
     SearchInvoiceComponent,
     SearchDateInvoiceComponent,
-    InvoiceComponent
+    InvoiceComponent,
+    
+    AddProviderComponent,
+    SuccessProviderComponent,
+    ErrorProviderComponent,
+    SearchProviderComponent,
+    DetailsProviderComponent,
+    DeleteProviderComponent,
+    UpdateProviderComponent
     
   ],
   imports: [

@@ -1,19 +1,19 @@
 <!-- Side navigation -->
 <div class="sidenav">
 	<div class="card">
-		<h5>Client</h5>
+		<h5>Fournisseur</h5>
 	</div>
 	<a class="card"  rel="noopener" routerLink="/menu" routerLinkActive="active">
 		<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>  
 	  		<span>Menu</span>
 	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
 	</a>
-	<a class="card"  rel="noopener" routerLink="/customer/add" routerLinkActive="active">
+	<a class="card"  rel="noopener" routerLink="/provider/add" routerLinkActive="active">
 		<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>  
 	  		<span>Ajouter</span>
 	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
 	</a>
-	<a class="card"  rel="noopener" routerLink="/customer/search" routerLinkActive="active">
+	<a class="card"  rel="noopener" routerLink="/provider/search" routerLinkActive="active">
 		<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>  
 	  		<span>Rechercher</span>
 	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
@@ -25,32 +25,53 @@
 <div class="container-g">
 
 <hr>
-<h3>Supprimer Client</h3>
+<h3>Rechercher Fournisseur</h3>
 <hr>
-<p>Supprimer les données de votre client.</p>
-<br>
-<br>
-
-<p>ID : {{customer.id}}</p>
-<p>N.B : {{customer.name}}</p>
-<p>Nom : {{customer.firstname}}</p>
-<p>Prénom : {{customer.lastname}}</p>
-<p>Date N. : {{customer.birthday}}</p>
-<p>Mobile : {{customer.mobile}}</p>
-<p>Adresse : {{customer.address}}</p>
-<p>Credit : {{customer.credit}}</p>
-
-<br>
-<br>
-<br>
-<br>
+<p>Rechercher votre fournisseur.</p>
 <br>
 <br>
 
 <form class="form-signin" method="post" action="">
+	<p>
+		<label for="username" class="sr-only">Nom de la boutique</label> <input
+			type="text" name="name" class="form-control"
+			placeholder="Rechercher" required autofocus 
+			value="{{searchValue}}" [(ngModel)]="searchValue">
+	</p>
+	<br>
 	<input type="hidden"  name="token" class="form-control-b" value="">
-	<button class="btn btn-lg btn-primary btn-block" type="submit" (click)=deleteCustomer() >Delete</button>
+	<button class="btn btn-lg btn-primary btn-block" type="submit" (click)=getSearchProviders()>Rechercher</button>
 </form>
+
+<br>
+<br>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">N.B.</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Date N.</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let provider of list">
+      <th scope="row">{{provider.id}}</th>
+      <td>{{provider.name}}</td>
+      <td>{{provider.lastname}}</td>
+      <td>{{provider.firstname}}</td>
+      <td>{{provider.birthday}}</td>
+      <td><a [routerLink]="['/provider/details', provider.id]"><i class="material-icons">details</i></a></td>
+      <td><a [routerLink]="['/provider/update', provider.id]"><i class="material-icons">update</i></a></td>
+      <td><a [routerLink]="['/provider/delete', provider.id]"><i class="material-icons">delete</i></a></td>
+    </tr>
+  </tbody>
+</table>
 
 
 <div class="content" role="main">

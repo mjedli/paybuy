@@ -1,19 +1,19 @@
 <!-- Side navigation -->
 <div class="sidenav">
 	<div class="card">
-		<h5>Client</h5>
+		<h5>Fournisseur</h5>
 	</div>
 	<a class="card"  rel="noopener" routerLink="/menu" routerLinkActive="active">
 		<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>  
 	  		<span>Menu</span>
 	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
 	</a>
-	<a class="card"  rel="noopener" routerLink="/customer/add" routerLinkActive="active">
+	<a class="card"  rel="noopener" routerLink="/provider/add" routerLinkActive="active">
 		<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>  
 	  		<span>Ajouter</span>
 	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
 	</a>
-	<a class="card"  rel="noopener" routerLink="/customer/search" routerLinkActive="active">
+	<a class="card"  rel="noopener" routerLink="/provider/search" routerLinkActive="active">
 		<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>  
 	  		<span>Rechercher</span>
 	  	<svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg> 
@@ -25,31 +25,57 @@
 <div class="container-g">
 
 <hr>
-<h3>Supprimer Client</h3>
+<h3>Ajouter Fournisseur</h3>
 <hr>
-<p>Supprimer les données de votre client.</p>
-<br>
-<br>
-
-<p>ID : {{customer.id}}</p>
-<p>N.B : {{customer.name}}</p>
-<p>Nom : {{customer.firstname}}</p>
-<p>Prénom : {{customer.lastname}}</p>
-<p>Date N. : {{customer.birthday}}</p>
-<p>Mobile : {{customer.mobile}}</p>
-<p>Adresse : {{customer.address}}</p>
-<p>Credit : {{customer.credit}}</p>
-
-<br>
-<br>
-<br>
-<br>
+<p>Ajouter les données de votre fournisseur.</p>
 <br>
 <br>
 
 <form class="form-signin" method="post" action="">
+	<p>
+		<label for="username" class="sr-only">Nom de la boutique</label> <input
+			type="text" name="currentCustomer.name" class="form-control"
+			placeholder="Nom de la boutique" autofocus 
+			value="{{currentProvider.name}}" [(ngModel)]="currentProvider.name">
+	</p>
+	<br>
+	<p>
+		<label for="username" class="sr-only">Nom</label> <input
+			type="text"  name="currentCustomer.firstname" class="form-control"
+			placeholder="Nom" required autofocus 
+			value="{{currentProvider.firstname}}" [(ngModel)]="currentProvider.firstname">
+	</p>
+	<br>
+	<p>
+		<label for="username" class="sr-only">Prénom</label> <input
+			type="text"  name="currentCustomer.lastname" class="form-control"
+			placeholder="Prénom" required autofocus 
+			value="{{currentProvider.lastname}}" [(ngModel)]="currentProvider.lastname">
+	</p>
+	<br>
+	<p>
+		<label for="username" class="sr-only">Date de naissance</label> <input
+			type="date"  name="currentCustomer.birthday" class="form-control"
+			placeholder="Date de naissance" required autofocus 
+			value="{{currentProvider.birthday}}" [(ngModel)]="currentProvider.birthday">
+	</p>
+	<br>
+	<p>
+		<label for="username" class="sr-only">Mobile</label> <input
+			type="text"  name="currentCustomer.mobile" class="form-control"
+			placeholder="Mobile" autofocus 
+			value="{{currentProvider.mobile}}" [(ngModel)]="currentProvider.mobile">
+	</p>
+	<br>
+	<p>
+		<label for="username" class="sr-only">Adresse</label> <input
+			type="textarea" name="currentCustomer.address" class="form-control"
+			placeholder="Adresse" autofocus
+			value="{{currentProvider.address}}" [(ngModel)]="currentProvider.address">
+	</p>
+	<br>
 	<input type="hidden"  name="token" class="form-control-b" value="">
-	<button class="btn btn-lg btn-primary btn-block" type="submit" (click)=deleteCustomer() >Delete</button>
+	<button class="btn btn-lg btn-primary btn-block" type="submit" (click)=addProvider() >Ok</button>
 </form>
 
 
