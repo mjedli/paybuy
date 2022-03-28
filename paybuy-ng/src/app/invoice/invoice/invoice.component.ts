@@ -16,7 +16,7 @@ import { Invoice } from '../model/invoice';
 })
 export class InvoiceComponent implements OnInit {
 
-	constructor(public stockService:StockService, public cutomerService:CustomerService,
+	constructor(public stockService:StockService, public customerService:CustomerService,
 				public router : Router, private route: ActivatedRoute,
 				public invoiceService:InvoiceService) { }
 	
@@ -44,7 +44,7 @@ export class InvoiceComponent implements OnInit {
 	ngOnInit() {
 		
 		this.routeSub = this.route.params.subscribe(params => {
-    		this.cutomerService.setCurrentIdSelected(params['idcustomer']);
+    		this.customerService.setCurrentIdSelected(params['idcustomer']);
     		this.invoiceService.setCurrentIdSelected(params['idinvoice']);
   		});
 		
@@ -84,19 +84,38 @@ export class InvoiceComponent implements OnInit {
 	}
 	
 	getCustomerById() {
-		this.customer=this.cutomerService.getCustomerByCurrentIdOLD();
+		this.customerService.getCustomerByCurrentId().subscribe({
+	        next: data => {
+				this.customer = data;
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("invoice/error");
+	        }
+      	});
 	}
 	
   	geInvoiceById() {
-		this.invoice = this.invoiceService.getInvoiceByCurrentIdOLD();
+		this.invoiceService.getInvoiceByCurrentId().subscribe({
+	        next: data => {
 		
-		this.currentDate = this.invoice.date;
-		this.somme = this.invoice.total;
-		this.sommeTVA = this.invoice.totalTva;
-		this.paid=this.invoice.paid;
-		this.credit=this.invoice.credit;
-		this.newCredit=this.invoice.newCredit;
-		this.listline = this.invoice.listline;
+				this.invoice = data;
+				this.currentDate = this.invoice.date;
+				this.somme = this.invoice.total;
+				this.sommeTVA = this.invoice.totalTva;
+				this.paid=this.invoice.paid;
+				this.credit=this.invoice.credit;
+				this.newCredit=this.invoice.newCredit;
+				this.listline = this.invoice.listline;
+				
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("invoice/error");
+	        }
+      	});
+		
+
 		
  	}
 

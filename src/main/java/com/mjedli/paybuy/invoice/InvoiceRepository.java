@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.mjedli.paybuy.Tools;
+import com.mjedli.paybuy.customer.model.Customer;
 import com.mjedli.paybuy.invoice.model.Invoice;
 import com.mjedli.paybuy.invoice.model.SearchInvoice;
 
@@ -37,6 +38,11 @@ public class InvoiceRepository {
 				Criteria.where("date").gte(searchInvoice.getStartDate()).lt(searchInvoice.getEndDate()));
 		Query query = new Query(criteria);
 		return mongoOperations.find(query, Invoice.class);
+	}
+
+	public Invoice getInvoiceById(String id) {
+		Query searchQuery = new Query(Criteria.where("id").is(Long.valueOf(id)));
+		return mongoOperations.findOne(searchQuery, Invoice.class);
 	}
 	
 }

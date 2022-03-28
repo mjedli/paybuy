@@ -28,5 +28,9 @@ public class InviceService {
 	public List<Invoice> getInvoicesByDate(SearchInvoice searchInvoice) {
 		return invoiceRepository.getInvoicesByDate(searchInvoice);
 	}
+
+	public Invoice getInvoiceById(String id) {
+		return invoiceRepository.getInvoiceById(id);
+	}
 	
 }

@@ -7,11 +7,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mjedli.paybuy.SequenceGeneratorService;
+import com.mjedli.paybuy.customer.model.Customer;
 import com.mjedli.paybuy.invoice.model.Invoice;
 import com.mjedli.paybuy.invoice.model.SearchInvoice;
 
@@ -49,6 +52,14 @@ public class InvoiceController {
 	
 	}
 	
+	
+	@GetMapping(value = HREF_BASE + "/invoice/{id}")
+	@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
+	private Invoice getInvoiceById(@PathVariable String id) {
+
+		return invoiceService.getInvoiceById(id);
+	
+	}
 	
 	
 }

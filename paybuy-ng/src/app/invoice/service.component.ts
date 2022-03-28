@@ -91,12 +91,8 @@ export class InvoiceService {
   /*
   * getComponentByCurrentId
   */
-  public getInvoiceByCurrentIdOLD():Invoice {
-    return this.listInvoice.find(x => x.id == this.currentIdSelected)!;
-  }
-  
-  public getCustomerByCurrentId():Observable<Customer> {
-    return this.http.get<Customer>("http://localhost:8080/paybay/customer/"+this.currentIdSelected);
+  public getInvoiceByCurrentId():Observable<Invoice> {
+    return this.http.get<Invoice>("http://localhost:8080/paybay/invoice/"+this.currentIdSelected);
   }
 
   /*
