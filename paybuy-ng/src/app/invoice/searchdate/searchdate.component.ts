@@ -4,8 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CustomerService } from '../../customer/service.component';
 import { InvoiceService } from '../service.component';
 import { Customer } from '../../customer/model/customer';
-import { Line } from '../model/line';
 import { Invoice } from '../model/invoice';
+import { SearchInvoice } from '../model/SearchInvoice';
 
 @Component({
   selector: 'app-searchinvoice',
@@ -26,6 +26,8 @@ export class SearchDateInvoiceComponent implements OnInit {
 	
 	list:Invoice[] = [];
 	
+	searchInvoice:SearchInvoice = {} as SearchInvoice;
+	
 	private routeSub: Subscription;
 	
 	ngOnInit() {
@@ -38,13 +40,35 @@ export class SearchDateInvoiceComponent implements OnInit {
   	}
 	
 	getCustomerById() {
-		this.customer=this.customerService.getCustomerByCurrentIdOLD();
+		this.customerService.getCustomerByCurrentId().subscribe({
+	        next: data => {
+				this.customer = data;
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("invoice/error");
+	        }
+      	});
 	}
 	
   	getSearchCustomers() {
-		if(this.searchValue != "") {
-			 this.invoiceService.setSearchValue(this.searchValue);
-			 this.list=this.invoiceService.getSearchInvoiceOLD();
+		if(this.currentDateStart != "" && this.currentDateEnd != "") {
+			
+			this.searchInvoice = {
+			    idCustomer:this.customer.id,
+	  			startDate:this.currentDateStart,
+	  			endDate:this.currentDateEnd,
+			}
+			
+			this.invoiceService.searchInvoicesByDate(this.searchInvoice).subscribe({
+		        next: data => {
+					this.list = data;
+		        },
+		        error: error => {
+		            console.error('There was an error!', error);
+		            this.router.navigateByUrl("invoice/error");
+		        }
+	      	}); 
 		}
 	}
 

@@ -29,12 +29,31 @@ export class DeleteProductComponent implements OnInit {
   	}
 	
   	getProductById() {
-		this.product=this.stockService.getProductByCurrentIdOLD();
+		this.stockService.getProductByCurrentId().subscribe({
+	        next: data => {
+				this.product = data;
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("stock/error");
+	        }
+      	});
  	}
 
   	deleteProduct() {
-		this.stockService.removeCustomerOLD();
-		this.router.navigateByUrl("stock/product/success");
+		this.stockService.removeProduct(this.product).subscribe({
+	        next: data => {
+				if(data == 1) {
+					this.router.navigateByUrl("stock/product/success");
+				} else {
+					this.router.navigateByUrl("stock/error");
+				}
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("stock/error");
+	        }
+      	})
  	}
 
 }

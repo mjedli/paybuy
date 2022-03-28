@@ -89,7 +89,7 @@
       <td><input
 			type="text" name="{{product.id}}" class="form-control"
 			placeholder="TVA" required autofocus 
-			value="{{product.TVA}}" [(ngModel)]="product.TVA" />
+			value="{{product.tva}}" [(ngModel)]="product.tva" />
 	</td>
       <td><a (click)="saveLine(product.id)"><i class="material-icons">add</i></a></td>
     </tr>
@@ -145,7 +145,7 @@
       <td>{{product.name}}</td>
       <td>{{product.amount}}</td>
       <td>{{product.sellPrice}}</td>
-      <td>{{product.TVA}}</td>
+      <td>{{product.tva}}</td>
       <td>{{product.price}}</td>
       <td><a (click)="removeLine(product.id)"><i class="material-icons">remove</i></a></td>
     </tr>

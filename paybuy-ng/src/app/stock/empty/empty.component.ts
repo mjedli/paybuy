@@ -14,18 +14,22 @@ export class EmptyProductComponent implements OnInit {
 	
 	searchValue:string="";
 	
-	list:Product[] = [
-		{id : "1", idProvider:"200", name : "Google Play", amount : "80", buyingPrice : "8.50", sellPrice : "9.50", tva : "5", profit : "1500"},
-	    //{id : "1654646546546546464", name : "Google", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-	    //{id : "2", name : "Yahoo", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-	];
+	list:Product[] = [];
 	
 	ngOnInit() {
-  		this.getSearchCustomers();
+  		this.getSearchEmptyProduct();
   	}
 	
-  	getSearchCustomers() {
-		this.list = this.stockService.getSearchProductOLD();
+  	getSearchEmptyProduct() {
+	   	 this.stockService.getSearchEmptyProduct().subscribe({
+	        next: data => {
+	            this.list = data;
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("stock/error");
+	        }
+		});
  	}
 
 }

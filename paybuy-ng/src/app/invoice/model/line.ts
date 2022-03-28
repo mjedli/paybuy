@@ -4,6 +4,6 @@ export class Line {
   name:string;
   amount:string;
   sellPrice:string;
-  TVA:string;
+  tva:string;
   price:number;
 }

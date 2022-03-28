@@ -29,12 +29,27 @@ export class UpdateProductComponent implements OnInit {
   	}
 	
   	getProductById() {
-		this.product=this.stockService.getProductByCurrentIdOLD();
+		this.stockService.getProductByCurrentId().subscribe({
+	        next: data => {
+				this.product = data;
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("stock/error");
+	        }
+      	});
  	}
 
   	updateProduct() {	
-		this.stockService.modifiyCustomerOLD(this.product);
-		this.router.navigateByUrl("stock/product/success");
+		this.stockService.modifiyProduct(this.product).subscribe({
+	        next: data => {
+				this.router.navigateByUrl("stock/product/success");
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("stock/error");
+	        }
+      	});
  	}
 
 }

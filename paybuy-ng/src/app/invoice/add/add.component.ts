@@ -16,7 +16,7 @@ import { Invoice } from '../model/invoice';
 })
 export class AddInvoiceComponent implements OnInit {
 
-	constructor(public stockService:StockService, public cutomerService:CustomerService,
+	constructor(public stockService:StockService, public customerService:CustomerService,
 				public router : Router, private route: ActivatedRoute,
 				public invoiceService:InvoiceService) { }
 	
@@ -36,10 +36,7 @@ export class AddInvoiceComponent implements OnInit {
 	
 	lineTemp:Line = {} as Line;
 	
-	list:Product[] = [
-	    //{id : "1654646546546546464", name : "Google", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-	    //{id : "2", name : "Yahoo", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-	];
+	list:Product[] = [];
 	
 	listline:Line[] = [];
 	
@@ -50,7 +47,7 @@ export class AddInvoiceComponent implements OnInit {
 	ngOnInit() {
 		
 		this.routeSub = this.route.params.subscribe(params => {
-    		this.cutomerService.setCurrentIdSelected(params['idcustomer']);
+    		this.customerService.setCurrentIdSelected(params['idcustomer']);
   		});
 		
 		this.getCustomerById();
@@ -70,8 +67,15 @@ export class AddInvoiceComponent implements OnInit {
 		  paid:this.paid
 		}
 		
-		this.invoiceService.addInvoice(this.invoice);
-		this.router.navigateByUrl("invoice/success");
+		this.invoiceService.addInvoice(this.invoice).subscribe({
+	        next: data => {
+				this.router.navigateByUrl("invoice/success");
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("invoice/error");
+	        }
+      	});
 	}
 	
 	onPrint(divName:string) {
@@ -114,7 +118,7 @@ export class AddInvoiceComponent implements OnInit {
 		this.lineTemp.price = Number(this.lineTemp.amount)*Number(this.lineTemp.sellPrice);
 		this.listline.push(this.lineTemp);
 		this.somme=this.somme+this.lineTemp.price;
-		this.sommeTVA=this.sommeTVA+this.lineTemp.price+((this.lineTemp.price*Number(this.lineTemp.TVA))/100);
+		this.sommeTVA=this.sommeTVA+this.lineTemp.price+((this.lineTemp.price*Number(this.lineTemp.tva))/100);
 		this.listSearchLine = [];
 	}
 	
@@ -136,7 +140,7 @@ export class AddInvoiceComponent implements OnInit {
 		
 		this.lineTemp = this.listline.find(x => x.id == id)!;
 		this.somme=this.somme-this.lineTemp.price;
-		this.sommeTVA=this.sommeTVA-this.lineTemp.price-((this.lineTemp.price*Number(this.lineTemp.TVA))/100);
+		this.sommeTVA=this.sommeTVA-this.lineTemp.price-((this.lineTemp.price*Number(this.lineTemp.tva))/100);
 		
 		const index = this.listline.findIndex((e) => e.id === id);
 
@@ -146,25 +150,43 @@ export class AddInvoiceComponent implements OnInit {
 	}
 	
 	getCustomerById() {
-		this.customer=this.cutomerService.getCustomerByCurrentIdOLD();
+		this.customerService.getCustomerByCurrentId().subscribe({
+	        next: data => {
+				this.customer = data;
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("invoice/error");
+	        }
+      	});
 	}
 	
   	getSearchCustomers() {
 		if(this.searchValue != "") {
-			 this.stockService.setSearchValue(this.searchValue);
-			 this.list=this.stockService.getSearchCustomersOLD();
-			 
-			for (var i = 0; i < this.list.length; i++) {
+			this.stockService.setSearchValue(this.searchValue);
+			if(this.searchValue != "") {
+				 this.stockService.setSearchValue(this.searchValue);
+			   	 this.stockService.getSearchProduct().subscribe({
+			        next: data => {
+			            this.list = data;
+			            for (var i = 0; i < this.list.length; i++) {
 
-				this.lineTemp = { id:this.list[i].id,
-								  idProvider:this.list[i].idProvider,
-								  name:this.list[i].name,
-								  amount:"",
-								  sellPrice:this.list[i].sellPrice,
-								  TVA:this.list[i].tva,
-								  price:0,	
-								};
-			  	this.listSearchLine.push(this.lineTemp);
+							this.lineTemp = { id:this.list[i].id,
+											  idProvider:this.list[i].idProvider,
+											  name:this.list[i].name,
+											  amount:"",
+											  sellPrice:this.list[i].sellPrice,
+											  tva:this.list[i].tva,
+											  price:0,	
+											};
+						  	this.listSearchLine.push(this.lineTemp);
+						}
+			        },
+			        error: error => {
+			            console.error('There was an error!', error);
+			            this.router.navigateByUrl("invoice/error");
+			        }
+				});
 			}
 		}
  	}

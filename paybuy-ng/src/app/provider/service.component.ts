@@ -52,96 +52,36 @@ export class ProviderService {
   /*
   * addComponent
   */
-  public addCustomerOLD(customer:Customer):void {
-
-    let currentId = "1";
-
-    let index = this.list.findIndex((e) => e.id === currentId);
-
-    while(index !== -1) {
-      currentId = currentId +1;
-      index = this.list.findIndex((e) => e.id === currentId);
-    }
-    customer.id=currentId;
-    this.list.push(customer);
-    
-    this.http.post<Customer>("http://localhost:8080/paybay/customer/add", customer);
-
-  }
-
-
-  /*
-  * addComponent
-  */
   public addProvider(provider:Provider):Observable<Provider> {
-    return this.http.post<Provider>("http://localhost:8080/paybay/customer/add", provider, httpOptions);
+    return this.http.post<Provider>("http://localhost:8080/paybay/provider/add", provider, httpOptions);
 
   }
   
   /*
   * getComponentByCurrentId
   */
-  public getCustomerByCurrentIdOLD():Provider {
-    return this.listProvider.find(x => x.id == this.currentIdSelected)!;
-  }
-  
   public getProviderByCurrentId():Observable<Provider> {
-    return this.http.get<Provider>("http://localhost:8080/paybay/customer/"+this.currentIdSelected);
+    return this.http.get<Provider>("http://localhost:8080/paybay/provider/"+this.currentIdSelected);
   }
 
   /*
   * modifiyComponent
   */
-  public modifiyCustomerOLD(customer:Customer):void {
-    const index = this.list.findIndex((e) => e.id === customer.id);
-
-    if (index === -1) {
-        this.list.push(customer);
-    } else {
-        this.list[index] = customer;
-    }
-  }
-
   public modifiyProvider(provider:Provider):Observable<Provider> {
-    return this.http.post<Provider>("http://localhost:8080/paybay/customer/update", provider, httpOptions);
+    return this.http.post<Provider>("http://localhost:8080/paybay/provider/update", provider, httpOptions);
   }
 
   /*
   * removeComponent
   */
-  public removeCustomerOLD() {
-    const index = this.list.findIndex((e) => e.id === this.currentIdSelected);
-
-    if (index !== -1) {
-        this.list.splice(index, 1);
-    }
-    this.currentIdSelected = "0"; 
-  }
-
   public removeProvider(provider:Provider):Observable<number> {
-    return this.http.post<number>("http://localhost:8080/paybay/customer/remove", provider, httpOptions);
+    return this.http.post<number>("http://localhost:8080/paybay/provider/remove", provider, httpOptions);
   }
 
   /*
   * getAllComponent
   */
-  public getSearchCustomersOLD():Provider[] {
-    let list : Provider[] = [];
-    if(this.searchValue === "") {
-      return this.list;
-    } else {
-      list = this.list.filter(
-        e => ( (e.firstname.match(this.searchValue)) || (e.lastname.match(this.searchValue)))  
-      );
-      this.searchValue="";
-      return list;
-    }
-  }
-  
-    /*
-  * getAllComponent
-  */
   public getSearchProviders():Observable<Provider[]> {
-    return this.http.post<Provider[]>("http://localhost:8080/paybay/customer", this.searchValue, httpOptions);
+    return this.http.post<Provider[]>("http://localhost:8080/paybay/provider", this.searchValue, httpOptions);
   }
 }

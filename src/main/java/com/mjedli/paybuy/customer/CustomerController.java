@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mjedli.paybuy.SequenceGeneratorService;
 import com.mjedli.paybuy.customer.model.Customer;
-import com.mongodb.client.result.DeleteResult;
 
 /**
  * @author mjedli
@@ -31,7 +30,7 @@ public class CustomerController {
 	@Autowired
 	private SequenceGeneratorService sequenceGeneratorService;
 	
-	@PostMapping(value = "/paybay/customer/add")
+	@PostMapping(value = HREF_BASE + "/customer/add")
 	@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
 	private Customer addCustomer(@RequestBody Customer customer) {
 		
@@ -41,7 +40,7 @@ public class CustomerController {
 	
 	}
 	
-	@PostMapping(value = "/paybay/customer")
+	@PostMapping(value = HREF_BASE + "/customer")
 	@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
 	private List<Customer> getSearchCustomer(@RequestBody String value) {
 
@@ -49,7 +48,7 @@ public class CustomerController {
 	
 	}
 	
-	@GetMapping(value = "/paybay/customer/{id}")
+	@GetMapping(value = HREF_BASE + "/customer/{id}")
 	@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
 	private Customer getCustomerById(@PathVariable String id) {
 
@@ -65,7 +64,7 @@ public class CustomerController {
 	
 	}
 	
-	@PostMapping(value = "/paybay/customer/remove")
+	@PostMapping(value = HREF_BASE + "/customer/remove")
 	@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
 	private int removeCustomer(@RequestBody Customer customer) {
 

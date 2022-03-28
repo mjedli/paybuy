@@ -14,10 +14,7 @@ export class SearchProductComponent implements OnInit {
 	
 	searchValue:string="";
 	
-	list:Product[] = [
-	    //{id : "1654646546546546464", name : "Google", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-	    //{id : "2", name : "Yahoo", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-	];
+	list:Product[] = [];
 	
 	ngOnInit() {
   		this.getSearchCustomers();
@@ -26,7 +23,15 @@ export class SearchProductComponent implements OnInit {
   	getSearchCustomers() {
 		if(this.searchValue != "") {
 			 this.stockService.setSearchValue(this.searchValue);
-			 this.list=this.stockService.getSearchCustomersOLD();
+		   	 this.stockService.getSearchProduct().subscribe({
+		        next: data => {
+		            this.list = data;
+		        },
+		        error: error => {
+		            console.error('There was an error!', error);
+		            this.router.navigateByUrl("stock/error");
+		        }
+			});
 		}
  	}
 

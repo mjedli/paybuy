@@ -29,7 +29,15 @@ export class DetailsProductComponent implements OnInit {
   	}
 	
   	getProductById() {
-		this.product=this.stockService.getProductByCurrentIdOLD();
+		this.stockService.getProductByCurrentId().subscribe({
+	        next: data => {
+				this.product = data;
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("stock/error");
+	        }
+      	});
  	}
 
 }

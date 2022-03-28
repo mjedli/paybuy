@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Customer } from '../customer/model/customer';
 import { Invoice } from './model/invoice';
-import { Line } from './model/line';
+import { SearchInvoice } from './model/SearchInvoice';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 
@@ -23,13 +23,7 @@ export class InvoiceService {
     	this.usersUrl = 'http://localhost:8080/paybay/customer';
  	}
 
-  listInvoice  : Invoice[] = [
-    {id:"1", idCustomer : "14646464654645464", date : new Date("2022-02-13"), total : 3250, totalTva : 3250, credit:3520.50, newCredit:3500, paid:3520,
-    listline :    [ {id : "2", idProvider : "200", name : "Google Play Advertising", amount : "180",  sellPrice : "19.50", TVA : "7", price:250},
-    {id : "3", idProvider : "200", name : "Google Play Game and tools", amount : "1180",  sellPrice : "119.50", TVA : "6", price:350}]},
-    
-    {id:"2", idCustomer : "2", date : new Date("2022-02-13"), listline : [], total : 4250, totalTva : 3250, credit:0, newCredit:3500, paid:0}
-  ];
+  listInvoice  : Invoice[] = [];
   
   list  : Customer[] = [
     {id : "14646464654645464", name : "Google Play Advertising 2022", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1", credit:3520.50},
@@ -76,32 +70,15 @@ export class InvoiceService {
   /*
   * addComponent
   */
-  public addInvoice(invoice:Invoice):void {
-
-    let currentId = "1";
-
-    let index = this.listInvoice.findIndex((e) => e.id === currentId);
-
-    while(index !== -1) {
-      currentId = currentId +1;
-      index = this.listInvoice.findIndex((e) => e.id === currentId);
-    }
-    invoice.id=currentId;
-    this.listInvoice.push(invoice);
-    
-    console.log(this.listInvoice);
-    
+  public addInvoice(invoice:Invoice):Observable<Invoice> {
+    return this.http.post<Invoice>("http://localhost:8080/paybay/invoice/add", invoice, httpOptions);
   }
-
-
-
 
   /*
   * addComponent
   */
   public addCustomer(customer:Customer):Observable<Customer> {
     return this.http.post<Customer>("http://localhost:8080/paybay/customer/add", customer, httpOptions);
-
   }
   
   /*
@@ -171,23 +148,14 @@ export class InvoiceService {
     }
   }
   
-    /*
-  * getAllComponent
+  /*
+  * getAllComponentByDate
   */
-  public getSearchInvoiceOLD():Invoice[] {
-    let list : Invoice[] = [];
-    if(this.searchValue === "") {
-      return list;
-    } else {
-      list = this.listInvoice.filter(
-        e => ( (e.id.match(this.searchValue)) || (e.id.match(this.searchValue)))  
-      );
-      this.searchValue="";
-      return list;
-    }
+  public searchInvoicesByDate(searchInvoice:SearchInvoice):Observable<Invoice[]> {
+    return this.http.post<Invoice[]>("http://localhost:8080/paybay/invoice/date", searchInvoice, httpOptions);
   }
   
-    /*
+  /*
   * getAllComponent
   */
   public getSearchCustomers():Observable<Customer[]> {

@@ -34,7 +34,15 @@ export class AddProductComponent implements OnInit {
   	}
 	
 	getProviderById() {
-		this.provider=this.providerService.getCustomerByCurrentIdOLD();
+		this.providerService.getProviderByCurrentId().subscribe({
+	        next: data => {
+				this.provider = data;
+	        },
+	        error: error => {
+	            console.error('There was an error!', error);
+	            this.router.navigateByUrl("stock/product/error");
+	        }
+	     });
 	}
 	
   	addProduct() {

@@ -22,15 +22,9 @@ export class StockService {
     	this.usersUrl = 'http://localhost:8080/paybay/customer';
  	}
 
-  listProduct  : Product[] = [
-    {id : "144654646546546646", idProvider:"200", name : "Google Play", amount : "80", buyingPrice : "8.50", sellPrice : "9.50", tva : "5", profit : "1500"},
-    {id : "2", idProvider:"200", name : "Google Play Advertising", amount : "180", buyingPrice : "8.50", sellPrice : "19.50", tva : "7", profit : "1500"},
-    {id : "3", idProvider:"200", name : "Google Play Game and tools", amount : "1180", buyingPrice : "8.50", sellPrice : "119.50", tva : "6", profit : "1500"},
-  ];
+  listProduct  : Product[] = [];
   
-  list  : Customer[] = [
-    //{id : "1", name : "Google Play", amount : "80", buyingPrice : "8.50", sellPrice : "9.50", TVA : "5", profit : "1500"},
-  ];
+  list  : Customer[] = [];
 
   currentIdSelected:string = "0";
   searchValue:string = "";
@@ -52,121 +46,45 @@ export class StockService {
   /*
   * addComponent
   */
-  public addCustomerOLD(customer:Customer):void {
-
-    let currentId = "1";
-
-    let index = this.list.findIndex((e) => e.id === currentId);
-
-    while(index !== -1) {
-      currentId = currentId +1;
-      index = this.list.findIndex((e) => e.id === currentId);
-    }
-    customer.id=currentId;
-    this.list.push(customer);
-    
-    this.http.post<Customer>("http://localhost:8080/paybay/customer/add", customer);
-
-  }
-
-
-  public addProductOLD(customer:Product):void {
-
-    let currentId = "1";
-
-    let index = this.listProduct.findIndex((e) => e.id === currentId);
-
-    while(index !== -1) {
-      currentId = currentId +1;
-      index = this.list.findIndex((e) => e.id === currentId);
-    }
-    customer.id=currentId;
-    this.listProduct.push(customer);
-  }
-
-    public addProduct(product: Product):Observable<Product> {
-       	return this.http.post<Product>("http://localhost:8080/paybay/stock/add", product, httpOptions);
-    }
-
-  /*
-  * addComponent
-  */
-  public addCustomer(customer:Customer):Observable<Customer> {
-    return this.http.post<Customer>("http://localhost:8080/paybay/customer/add", customer, httpOptions);
-
-  }
+	public addProduct(product: Product):Observable<Product> {
+	   	return this.http.post<Product>("http://localhost:8080/paybay/stock/add", product, httpOptions);
+	}
   
   /*
   * getComponentByCurrentId
   */
-  public getProductByCurrentIdOLD():Product {
-    return this.listProduct.find(x => x.id == this.currentIdSelected)!;
-  }
-  
-  public getCustomerByCurrentId():Observable<Customer> {
-    return this.http.get<Customer>("http://localhost:8080/paybay/customer/"+this.currentIdSelected);
+  public getProductByCurrentId():Observable<Product> {
+    return this.http.get<Product>("http://localhost:8080/paybay/stock/"+this.currentIdSelected);
   }
 
   /*
   * modifiyComponent
   */
-  public modifiyCustomerOLD(product:Product):void {
-    const index = this.listProduct.findIndex((e) => e.id === product.id);
 
-    if (index === -1) {
-        this.listProduct.push(product);
-    } else {
-        this.listProduct[index] = product;
-    }
-  }
-
-  public modifiyCustomer(customer:Customer):Observable<Customer> {
-    return this.http.post<Customer>("http://localhost:8080/paybay/customer/update", customer, httpOptions);
+  public modifiyProduct(product:Product):Observable<Product> {
+    return this.http.post<Product>("http://localhost:8080/paybay/stock/update", product, httpOptions);
   }
 
   /*
   * removeComponent
   */
-  public removeCustomerOLD() {
-    const index = this.listProduct.findIndex((e) => e.id === this.currentIdSelected);
 
-    if (index !== -1) {
-        this.listProduct.splice(index, 1);
-    }
-    this.currentIdSelected = "0"; 
-  }
-
-  public removeCustomer(customer:Customer):Observable<number> {
-    return this.http.post<number>("http://localhost:8080/paybay/customer/remove", customer, httpOptions);
+  public removeProduct(product:Product):Observable<number> {
+    return this.http.post<number>("http://localhost:8080/paybay/stock/remove", product, httpOptions);
   }
 
   /*
   * getAllComponent
   */
-  public getSearchCustomersOLD():Product[] {
-    let list : Product[] = [];
-    if(this.searchValue === "") {
-      return this.listProduct;
-    } else {
-      list = this.listProduct.filter(
-        e => ( (e.name.match(this.searchValue)) || (e.id.match(this.searchValue)))  
-      );
-      this.searchValue="";
-      return list;
-    }
+  public getSearchProduct():Observable<Product[]> {
+    return this.http.post<Product[]>("http://localhost:8080/paybay/stock", this.searchValue, httpOptions);
   }
   
-    /*
-  * getAllComponent
+  /*
+  * getSearchEmptyProduct
   */
-  public getSearchProductOLD():Product[] {
-    return this.listProduct;
+  public getSearchEmptyProduct():Observable<Product[]> {
+    return this.http.get<Product[]>("http://localhost:8080/paybay/stock/empty",httpOptions);
   }
-  
-    /*
-  * getAllComponent
-  */
-  public getSearchCustomers():Observable<Customer[]> {
-    return this.http.post<Customer[]>("http://localhost:8080/paybay/customer", this.searchValue, httpOptions);
-  }
+
 }
