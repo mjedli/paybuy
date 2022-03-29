@@ -27,16 +27,7 @@ const httpOptions = {
 class InvoiceService {
     constructor(http) {
         this.http = http;
-        this.listInvoice = [
-            { id: "1", idCustomer: "14646464654645464", date: new Date("2022-02-13"), total: 3250, totalTva: 3250, credit: 3520.50, newCredit: 3500, paid: 3520,
-                listline: [{ id: "2", idProvider: "200", name: "Google Play Advertising", amount: "180", sellPrice: "19.50", TVA: "7", price: 250 },
-                    { id: "3", idProvider: "200", name: "Google Play Game and tools", amount: "1180", sellPrice: "119.50", TVA: "6", price: 350 }] },
-            { id: "2", idCustomer: "2", date: new Date("2022-02-13"), listline: [], total: 4250, totalTva: 3250, credit: 0, newCredit: 3500, paid: 0 }
-        ];
-        this.list = [
-            { id: "14646464654645464", name: "Google Play Advertising 2022", firstname: "Jedli", lastname: "Mejdi", birthday: "02/02/1986", mobile: "985986760", address: "address 1", credit: 3520.50 },
-            { id: "2", name: "Yahoo", firstname: "Jedli", lastname: "Mejdi", birthday: "02/02/1986", mobile: "985986760", address: "address 1", credit: 0 },
-        ];
+        this.listInvoice = [];
         this.currentIdSelected = "0";
         this.searchValue = "";
         this.usersUrl = 'http://localhost:8080/paybay/customer';
@@ -56,113 +47,20 @@ class InvoiceService {
     /*
     * addComponent
     */
-    addCustomerOLD(customer) {
-        let currentId = "1";
-        let index = this.list.findIndex((e) => e.id === currentId);
-        while (index !== -1) {
-            currentId = currentId + 1;
-            index = this.list.findIndex((e) => e.id === currentId);
-        }
-        customer.id = currentId;
-        this.list.push(customer);
-        this.http.post("http://localhost:8080/paybay/customer/add", customer);
-    }
-    /*
-    * addComponent
-    */
     addInvoice(invoice) {
-        let currentId = "1";
-        let index = this.listInvoice.findIndex((e) => e.id === currentId);
-        while (index !== -1) {
-            currentId = currentId + 1;
-            index = this.listInvoice.findIndex((e) => e.id === currentId);
-        }
-        invoice.id = currentId;
-        this.listInvoice.push(invoice);
-        console.log(this.listInvoice);
-    }
-    /*
-    * addComponent
-    */
-    addCustomer(customer) {
-        return this.http.post("http://localhost:8080/paybay/customer/add", customer, httpOptions);
+        return this.http.post("http://localhost:8080/paybay/invoice/add", invoice, httpOptions);
     }
     /*
     * getComponentByCurrentId
     */
-    getCustomerByCurrentIdOLD() {
-        return this.list.find(x => x.id == this.currentIdSelected);
+    getInvoiceByCurrentId() {
+        return this.http.get("http://localhost:8080/paybay/invoice/" + this.currentIdSelected);
     }
     /*
-    * getComponentByCurrentId
+    * getAllComponentByDate
     */
-    getInvoiceByCurrentIdOLD() {
-        return this.listInvoice.find(x => x.id == this.currentIdSelected);
-    }
-    getCustomerByCurrentId() {
-        return this.http.get("http://localhost:8080/paybay/customer/" + this.currentIdSelected);
-    }
-    /*
-    * modifiyComponent
-    */
-    modifiyCustomerOLD(customer) {
-        const index = this.list.findIndex((e) => e.id === customer.id);
-        if (index === -1) {
-            this.list.push(customer);
-        }
-        else {
-            this.list[index] = customer;
-        }
-    }
-    modifiyCustomer(customer) {
-        return this.http.post("http://localhost:8080/paybay/customer/update", customer, httpOptions);
-    }
-    /*
-    * removeComponent
-    */
-    removeCustomerOLD() {
-        const index = this.list.findIndex((e) => e.id === this.currentIdSelected);
-        if (index !== -1) {
-            this.list.splice(index, 1);
-        }
-        this.currentIdSelected = "0";
-    }
-    removeCustomer(customer) {
-        return this.http.post("http://localhost:8080/paybay/customer/remove", customer, httpOptions);
-    }
-    /*
-    * getAllComponent
-    */
-    getSearchCustomersOLD() {
-        let list = [];
-        if (this.searchValue === "") {
-            return this.list;
-        }
-        else {
-            list = this.list.filter(e => ((e.firstname.match(this.searchValue)) || (e.lastname.match(this.searchValue))));
-            this.searchValue = "";
-            return list;
-        }
-    }
-    /*
-  * getAllComponent
-  */
-    getSearchInvoiceOLD() {
-        let list = [];
-        if (this.searchValue === "") {
-            return list;
-        }
-        else {
-            list = this.listInvoice.filter(e => ((e.id.match(this.searchValue)) || (e.id.match(this.searchValue))));
-            this.searchValue = "";
-            return list;
-        }
-    }
-    /*
-  * getAllComponent
-  */
-    getSearchCustomers() {
-        return this.http.post("http://localhost:8080/paybay/customer", this.searchValue, httpOptions);
+    searchInvoicesByDate(searchInvoice) {
+        return this.http.post("http://localhost:8080/paybay/invoice/date", searchInvoice, httpOptions);
     }
 }
 InvoiceService.ɵfac = function InvoiceService_Factory(t) { return new (t || InvoiceService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
@@ -460,14 +358,14 @@ function InvoiceComponent_tr_64_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](product_r1.sellPrice);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](product_r1.TVA);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](product_r1.tva);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](product_r1.price);
 } }
 class InvoiceComponent {
-    constructor(stockService, cutomerService, router, route, invoiceService) {
+    constructor(stockService, customerService, router, route, invoiceService) {
         this.stockService = stockService;
-        this.cutomerService = cutomerService;
+        this.customerService = customerService;
         this.router = router;
         this.route = route;
         this.invoiceService = invoiceService;
@@ -487,7 +385,7 @@ class InvoiceComponent {
     ;
     ngOnInit() {
         this.routeSub = this.route.params.subscribe(params => {
-            this.cutomerService.setCurrentIdSelected(params['idcustomer']);
+            this.customerService.setCurrentIdSelected(params['idcustomer']);
             this.invoiceService.setCurrentIdSelected(params['idinvoice']);
         });
         this.getCustomerById();
@@ -517,17 +415,33 @@ class InvoiceComponent {
         return false;
     }
     getCustomerById() {
-        this.customer = this.cutomerService.getCustomerByCurrentIdOLD();
+        this.customerService.getCustomerByCurrentId().subscribe({
+            next: data => {
+                this.customer = data;
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("invoice/error");
+            }
+        });
     }
     geInvoiceById() {
-        this.invoice = this.invoiceService.getInvoiceByCurrentIdOLD();
-        this.currentDate = this.invoice.date;
-        this.somme = this.invoice.total;
-        this.sommeTVA = this.invoice.totalTva;
-        this.paid = this.invoice.paid;
-        this.credit = this.invoice.credit;
-        this.newCredit = this.invoice.newCredit;
-        this.listline = this.invoice.listline;
+        this.invoiceService.getInvoiceByCurrentId().subscribe({
+            next: data => {
+                this.invoice = data;
+                this.currentDate = this.invoice.date;
+                this.somme = this.invoice.total;
+                this.sommeTVA = this.invoice.totalTva;
+                this.paid = this.invoice.paid;
+                this.credit = this.invoice.credit;
+                this.newCredit = this.invoice.newCredit;
+                this.listline = this.invoice.listline;
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("invoice/error");
+            }
+        });
     }
 }
 InvoiceComponent.ɵfac = function InvoiceComponent_Factory(t) { return new (t || InvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_stock_service_component__WEBPACK_IMPORTED_MODULE_1__["StockService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_customer_service_component__WEBPACK_IMPORTED_MODULE_2__["CustomerService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_component__WEBPACK_IMPORTED_MODULE_4__["InvoiceService"])); };
@@ -999,7 +913,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const _c0 = function (a1) { return ["/invoice/search", a1]; };
-function SearchInvoiceComponent_tr_61_Template(rf, ctx) { if (rf & 1) {
+function SearchInvoiceComponent_tr_63_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "tr");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "th", 22);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
@@ -1044,10 +958,7 @@ class SearchInvoiceComponent {
         this.customerService = customerService;
         this.router = router;
         this.searchValue = "";
-        this.list = [
-        //{id : "1654646546546546464", name : "Google", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-        //{id : "2", name : "Yahoo", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-        ];
+        this.list = [];
     }
     ngOnInit() {
         this.getSearchCustomers();
@@ -1055,12 +966,20 @@ class SearchInvoiceComponent {
     getSearchCustomers() {
         if (this.searchValue != "") {
             this.customerService.setSearchValue(this.searchValue);
-            this.list = this.customerService.getSearchCustomersOLD();
+            this.customerService.getSearchCustomers().subscribe({
+                next: data => {
+                    this.list = data;
+                },
+                error: error => {
+                    console.error('There was an error!', error);
+                    this.router.navigateByUrl("invoice/error");
+                }
+            });
         }
     }
 }
 SearchInvoiceComponent.ɵfac = function SearchInvoiceComponent_Factory(t) { return new (t || SearchInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_customer_service_component__WEBPACK_IMPORTED_MODULE_1__["CustomerService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"])); };
-SearchInvoiceComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: SearchInvoiceComponent, selectors: [["app-searchinvoice"]], decls: 66, vars: 3, consts: [[1, "sidenav"], [1, "card"], ["rel", "noopener", "routerLink", "/menu", "routerLinkActive", "active", 1, "card"], ["xmlns", "http://www.w3.org/2000/svg", "width", "24", "height", "24", "viewBox", "0 0 24 24", 1, "material-icons"], ["d", "M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"], ["d", "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"], ["rel", "noopener", "routerLink", "/invoice/add", "routerLinkActive", "active", 1, "card"], ["rel", "noopener", "routerLink", "/invoice/search", "routerLinkActive", "active", 1, "card"], [1, "main"], [1, "container-g"], ["method", "post", "action", "", 1, "form-signin"], ["for", "username", 1, "sr-only"], ["type", "text", "name", "name", "placeholder", "Rechercher", "required", "", "autofocus", "", 1, "form-control", 3, "value", "ngModel", "ngModelChange"], ["type", "hidden", "name", "token", "value", "", 1, "form-control-b"], ["type", "submit", 1, "btn", "btn-lg", "btn-primary", "btn-block", 3, "click"], [1, "table"], [1, "thead-light"], ["scope", "col"], [4, "ngFor", "ngForOf"], ["role", "main", 1, "content"], ["id", "clouds", "alt", "Gray Clouds Background", "xmlns", "http://www.w3.org/2000/svg", "width", "2611.084", "height", "485.677", "viewBox", "0 0 2611.084 485.677"], ["id", "Path_39", "data-name", "Path 39", "d", "M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z", "transform", "translate(142.69 -634.312)", "fill", "#eee"], ["scope", "row"], [3, "routerLink"], [1, "material-icons"]], template: function SearchInvoiceComponent_Template(rf, ctx) { if (rf & 1) {
+SearchInvoiceComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: SearchInvoiceComponent, selectors: [["app-searchinvoice"]], decls: 68, vars: 3, consts: [[1, "sidenav"], [1, "card"], ["rel", "noopener", "routerLink", "/menu", "routerLinkActive", "active", 1, "card"], ["xmlns", "http://www.w3.org/2000/svg", "width", "24", "height", "24", "viewBox", "0 0 24 24", 1, "material-icons"], ["d", "M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"], ["d", "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"], ["rel", "noopener", "routerLink", "/invoice/add", "routerLinkActive", "active", 1, "card"], ["rel", "noopener", "routerLink", "/invoice/search", "routerLinkActive", "active", 1, "card"], [1, "main"], [1, "container-g"], ["method", "post", "action", "", 1, "form-signin"], ["for", "username", 1, "sr-only"], ["type", "text", "name", "name", "placeholder", "Rechercher", "required", "", "autofocus", "", 1, "form-control", 3, "value", "ngModel", "ngModelChange"], ["type", "hidden", "name", "token", "value", "", 1, "form-control-b"], ["type", "submit", 1, "btn", "btn-lg", "btn-primary", "btn-block", 3, "click"], [1, "table"], [1, "thead-light"], ["scope", "col"], [4, "ngFor", "ngForOf"], ["role", "main", 1, "content"], ["id", "clouds", "alt", "Gray Clouds Background", "xmlns", "http://www.w3.org/2000/svg", "width", "2611.084", "height", "485.677", "viewBox", "0 0 2611.084 485.677"], ["id", "Path_39", "data-name", "Path 39", "d", "M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z", "transform", "translate(142.69 -634.312)", "fill", "#eee"], ["scope", "row"], [3, "routerLink"], [1, "material-icons"]], template: function SearchInvoiceComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "h5");
@@ -1123,63 +1042,66 @@ SearchInvoiceComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵd
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](31, "p");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](32, "Rechercher la facture de votre client.");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](33, "br");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](34, "br");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](35, "form", 10);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](36, "p");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](37, "label", 11);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](38, "Nom");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](33, "p");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](34, "Rechercher le client.");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](39, "input", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function SearchInvoiceComponent_Template_input_ngModelChange_39_listener($event) { return ctx.searchValue = $event; });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](35, "br");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](36, "br");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](37, "form", 10);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](38, "p");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](39, "label", 11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](40, "Nom");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](40, "br");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](41, "input", 13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](42, "button", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function SearchInvoiceComponent_Template_button_click_42_listener() { return ctx.getSearchCustomers(); });
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](43, "Rechercher");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](41, "input", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function SearchInvoiceComponent_Template_input_ngModelChange_41_listener($event) { return ctx.searchValue = $event; });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](44, "br");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](45, "br");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](46, "table", 15);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](47, "thead", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](48, "tr");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](49, "th", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](50, "#");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](42, "br");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](43, "input", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](44, "button", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function SearchInvoiceComponent_Template_button_click_44_listener() { return ctx.getSearchCustomers(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](45, "Rechercher");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](46, "br");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](47, "br");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](48, "table", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](49, "thead", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](50, "tr");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](51, "th", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](52, "N.B.");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](52, "#");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](53, "th", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](54, "Nom");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](54, "N.B.");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](55, "th", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](56, "Pr\u00E9nom");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](56, "Nom");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](57, "th", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](58, "Date N.");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](58, "Pr\u00E9nom");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](59, "th", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](59, "th", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](60, "Date N.");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](61, "th", 17);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](60, "tbody");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](61, SearchInvoiceComponent_tr_61_Template, 15, 8, "tr", 18);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](62, "tbody");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](63, SearchInvoiceComponent_tr_63_Template, 15, 8, "tr", 18);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](62, "div", 19);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](64, "div", 19);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceSVG"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](63, "svg", 20);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](64, "path", 21);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](65, "svg", 20);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](66, "path", 21);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceHTML"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](65, "app-footer");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](67, "app-footer");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](39);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](41);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("value", ctx.searchValue);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.searchValue);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](22);
@@ -1266,10 +1188,7 @@ class SearchAddProductComponent {
         this.providerService = providerService;
         this.router = router;
         this.searchValue = "";
-        this.list = [
-        //{id : "1654646546546546464", name : "Google", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-        //{id : "2", name : "Yahoo", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-        ];
+        this.list = [];
     }
     ngOnInit() {
         this.getSearchProviders();
@@ -1277,7 +1196,15 @@ class SearchAddProductComponent {
     getSearchProviders() {
         if (this.searchValue != "") {
             this.providerService.setSearchValue(this.searchValue);
-            this.list = this.providerService.getSearchCustomersOLD();
+            this.providerService.getSearchProviders().subscribe({
+                next: data => {
+                    this.list = data;
+                },
+                error: error => {
+                    console.error('There was an error!', error);
+                    this.router.navigateByUrl("provider/error");
+                }
+            });
         }
     }
 }
@@ -1952,11 +1879,31 @@ class DeleteProductComponent {
         this.getProductById();
     }
     getProductById() {
-        this.product = this.stockService.getProductByCurrentIdOLD();
+        this.stockService.getProductByCurrentId().subscribe({
+            next: data => {
+                this.product = data;
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("stock/error");
+            }
+        });
     }
     deleteProduct() {
-        this.stockService.removeCustomerOLD();
-        this.router.navigateByUrl("stock/product/success");
+        this.stockService.removeProduct(this.product).subscribe({
+            next: data => {
+                if (data == 1) {
+                    this.router.navigateByUrl("stock/product/success");
+                }
+                else {
+                    this.router.navigateByUrl("stock/error");
+                }
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("stock/error");
+            }
+        });
     }
 }
 DeleteProductComponent.ɵfac = function DeleteProductComponent_Factory(t) { return new (t || DeleteProductComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_component__WEBPACK_IMPORTED_MODULE_1__["StockService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"])); };
@@ -2176,6 +2123,7 @@ class SearchDateInvoiceComponent {
         this.customer = {};
         this.searchValue = "1";
         this.list = [];
+        this.searchInvoice = {};
     }
     ngOnInit() {
         this.routeSub = this.route.params.subscribe(params => {
@@ -2184,12 +2132,32 @@ class SearchDateInvoiceComponent {
         this.getCustomerById();
     }
     getCustomerById() {
-        this.customer = this.customerService.getCustomerByCurrentIdOLD();
+        this.customerService.getCustomerByCurrentId().subscribe({
+            next: data => {
+                this.customer = data;
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("invoice/error");
+            }
+        });
     }
     getSearchCustomers() {
-        if (this.searchValue != "") {
-            this.invoiceService.setSearchValue(this.searchValue);
-            this.list = this.invoiceService.getSearchInvoiceOLD();
+        if (this.currentDateStart != "" && this.currentDateEnd != "") {
+            this.searchInvoice = {
+                idCustomer: this.customer.id,
+                startDate: this.currentDateStart,
+                endDate: this.currentDateEnd,
+            };
+            this.invoiceService.searchInvoicesByDate(this.searchInvoice).subscribe({
+                next: data => {
+                    this.list = data;
+                },
+                error: error => {
+                    console.error('There was an error!', error);
+                    this.router.navigateByUrl("invoice/error");
+                }
+            });
         }
     }
 }
@@ -2382,7 +2350,15 @@ class DetailsProductComponent {
         this.getProductById();
     }
     getProductById() {
-        this.product = this.stockService.getProductByCurrentIdOLD();
+        this.stockService.getProductByCurrentId().subscribe({
+            next: data => {
+                this.product = data;
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("stock/error");
+            }
+        });
     }
 }
 DetailsProductComponent.ɵfac = function DetailsProductComponent_Factory(t) { return new (t || DetailsProductComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_component__WEBPACK_IMPORTED_MODULE_1__["StockService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"])); };
@@ -2758,14 +2734,8 @@ const httpOptions = {
 class StockService {
     constructor(http) {
         this.http = http;
-        this.listProduct = [
-            { id: "144654646546546646", idProvider: "200", name: "Google Play", amount: "80", buyingPrice: "8.50", sellPrice: "9.50", tva: "5", profit: "1500" },
-            { id: "2", idProvider: "200", name: "Google Play Advertising", amount: "180", buyingPrice: "8.50", sellPrice: "19.50", tva: "7", profit: "1500" },
-            { id: "3", idProvider: "200", name: "Google Play Game and tools", amount: "1180", buyingPrice: "8.50", sellPrice: "119.50", tva: "6", profit: "1500" },
-        ];
-        this.list = [
-        //{id : "1", name : "Google Play", amount : "80", buyingPrice : "8.50", sellPrice : "9.50", TVA : "5", profit : "1500"},
-        ];
+        this.listProduct = [];
+        this.list = [];
         this.currentIdSelected = "0";
         this.searchValue = "";
         this.usersUrl = 'http://localhost:8080/paybay/customer';
@@ -2785,98 +2755,38 @@ class StockService {
     /*
     * addComponent
     */
-    addCustomerOLD(customer) {
-        let currentId = "1";
-        let index = this.list.findIndex((e) => e.id === currentId);
-        while (index !== -1) {
-            currentId = currentId + 1;
-            index = this.list.findIndex((e) => e.id === currentId);
-        }
-        customer.id = currentId;
-        this.list.push(customer);
-        this.http.post("http://localhost:8080/paybay/customer/add", customer);
-    }
-    addProductOLD(customer) {
-        let currentId = "1";
-        let index = this.listProduct.findIndex((e) => e.id === currentId);
-        while (index !== -1) {
-            currentId = currentId + 1;
-            index = this.list.findIndex((e) => e.id === currentId);
-        }
-        customer.id = currentId;
-        this.listProduct.push(customer);
-    }
     addProduct(product) {
         return this.http.post("http://localhost:8080/paybay/stock/add", product, httpOptions);
     }
     /*
-    * addComponent
-    */
-    addCustomer(customer) {
-        return this.http.post("http://localhost:8080/paybay/customer/add", customer, httpOptions);
-    }
-    /*
     * getComponentByCurrentId
     */
-    getProductByCurrentIdOLD() {
-        return this.listProduct.find(x => x.id == this.currentIdSelected);
-    }
-    getCustomerByCurrentId() {
-        return this.http.get("http://localhost:8080/paybay/customer/" + this.currentIdSelected);
+    getProductByCurrentId() {
+        return this.http.get("http://localhost:8080/paybay/stock/" + this.currentIdSelected);
     }
     /*
     * modifiyComponent
     */
-    modifiyCustomerOLD(product) {
-        const index = this.listProduct.findIndex((e) => e.id === product.id);
-        if (index === -1) {
-            this.listProduct.push(product);
-        }
-        else {
-            this.listProduct[index] = product;
-        }
-    }
-    modifiyCustomer(customer) {
-        return this.http.post("http://localhost:8080/paybay/customer/update", customer, httpOptions);
+    modifiyProduct(product) {
+        return this.http.post("http://localhost:8080/paybay/stock/update", product, httpOptions);
     }
     /*
     * removeComponent
     */
-    removeCustomerOLD() {
-        const index = this.listProduct.findIndex((e) => e.id === this.currentIdSelected);
-        if (index !== -1) {
-            this.listProduct.splice(index, 1);
-        }
-        this.currentIdSelected = "0";
-    }
-    removeCustomer(customer) {
-        return this.http.post("http://localhost:8080/paybay/customer/remove", customer, httpOptions);
+    removeProduct(product) {
+        return this.http.post("http://localhost:8080/paybay/stock/remove", product, httpOptions);
     }
     /*
     * getAllComponent
     */
-    getSearchCustomersOLD() {
-        let list = [];
-        if (this.searchValue === "") {
-            return this.listProduct;
-        }
-        else {
-            list = this.listProduct.filter(e => ((e.name.match(this.searchValue)) || (e.id.match(this.searchValue))));
-            this.searchValue = "";
-            return list;
-        }
+    getSearchProduct() {
+        return this.http.post("http://localhost:8080/paybay/stock", this.searchValue, httpOptions);
     }
     /*
-  * getAllComponent
-  */
-    getSearchProductOLD() {
-        return this.listProduct;
-    }
-    /*
-  * getAllComponent
-  */
-    getSearchCustomers() {
-        return this.http.post("http://localhost:8080/paybay/customer", this.searchValue, httpOptions);
+    * getSearchEmptyProduct
+    */
+    getSearchEmptyProduct() {
+        return this.http.get("http://localhost:8080/paybay/stock/empty", httpOptions);
     }
 }
 StockService.ɵfac = function StockService_Factory(t) { return new (t || StockService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
@@ -2938,77 +2848,30 @@ class CustomerService {
     /*
     * addComponent
     */
-    addCustomerOLD(customer) {
-        let currentId = "1";
-        let index = this.list.findIndex((e) => e.id === currentId);
-        while (index !== -1) {
-            currentId = currentId + 1;
-            index = this.list.findIndex((e) => e.id === currentId);
-        }
-        customer.id = currentId;
-        this.list.push(customer);
-        this.http.post("http://localhost:8080/paybay/customer/add", customer);
-    }
-    /*
-    * addComponent
-    */
     addCustomer(customer) {
         return this.http.post("http://localhost:8080/paybay/customer/add", customer, httpOptions);
     }
     /*
     * getComponentByCurrentId
     */
-    getCustomerByCurrentIdOLD() {
-        return this.list.find(x => x.id == this.currentIdSelected);
-    }
     getCustomerByCurrentId() {
         return this.http.get("http://localhost:8080/paybay/customer/" + this.currentIdSelected);
     }
     /*
     * modifiyComponent
     */
-    modifiyCustomerOLD(customer) {
-        const index = this.list.findIndex((e) => e.id === customer.id);
-        if (index === -1) {
-            this.list.push(customer);
-        }
-        else {
-            this.list[index] = customer;
-        }
-    }
     modifiyCustomer(customer) {
         return this.http.post("http://localhost:8080/paybay/customer/update", customer, httpOptions);
     }
     /*
     * removeComponent
     */
-    removeCustomerOLD() {
-        const index = this.list.findIndex((e) => e.id === this.currentIdSelected);
-        if (index !== -1) {
-            this.list.splice(index, 1);
-        }
-        this.currentIdSelected = "0";
-    }
     removeCustomer(customer) {
         return this.http.post("http://localhost:8080/paybay/customer/remove", customer, httpOptions);
     }
     /*
     * getAllComponent
     */
-    getSearchCustomersOLD() {
-        let list = [];
-        if (this.searchValue === "") {
-            return this.list;
-        }
-        else {
-            list = this.list.filter(e => ((e.firstname.match(this.searchValue)) || (e.lastname.match(this.searchValue))));
-            this.searchValue = "";
-            return list;
-        }
-    }
-    /*
-  * getAllComponent
-  */
     getSearchCustomers() {
         return this.http.post("http://localhost:8080/paybay/customer", this.searchValue, httpOptions);
     }
@@ -3091,10 +2954,7 @@ class SearchAddInvoiceComponent {
         this.customerService = customerService;
         this.router = router;
         this.searchValue = "";
-        this.list = [
-        //{id : "1654646546546546464", name : "Google", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-        //{id : "2", name : "Yahoo", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-        ];
+        this.list = [];
     }
     ngOnInit() {
         this.getSearchCustomers();
@@ -3102,7 +2962,15 @@ class SearchAddInvoiceComponent {
     getSearchCustomers() {
         if (this.searchValue != "") {
             this.customerService.setSearchValue(this.searchValue);
-            this.list = this.customerService.getSearchCustomersOLD();
+            this.customerService.getSearchCustomers().subscribe({
+                next: data => {
+                    this.list = data;
+                },
+                error: error => {
+                    console.error('There was an error!', error);
+                    this.router.navigateByUrl("invoice/error");
+                }
+            });
         }
     }
 }
@@ -3644,11 +3512,26 @@ class UpdateProductComponent {
         this.getProductById();
     }
     getProductById() {
-        this.product = this.stockService.getProductByCurrentIdOLD();
+        this.stockService.getProductByCurrentId().subscribe({
+            next: data => {
+                this.product = data;
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("stock/error");
+            }
+        });
     }
     updateProduct() {
-        this.stockService.modifiyCustomerOLD(this.product);
-        this.router.navigateByUrl("stock/product/success");
+        this.stockService.modifiyProduct(this.product).subscribe({
+            next: data => {
+                this.router.navigateByUrl("stock/product/success");
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("stock/error");
+            }
+        });
     }
 }
 UpdateProductComponent.ɵfac = function UpdateProductComponent_Factory(t) { return new (t || UpdateProductComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_component__WEBPACK_IMPORTED_MODULE_1__["StockService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"])); };
@@ -4023,7 +3906,15 @@ class AddProductComponent {
         this.getProviderById();
     }
     getProviderById() {
-        this.provider = this.providerService.getCustomerByCurrentIdOLD();
+        this.providerService.getProviderByCurrentId().subscribe({
+            next: data => {
+                this.provider = data;
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("stock/product/error");
+            }
+        });
     }
     addProduct() {
         if (this.product.name != '') {
@@ -4301,15 +4192,21 @@ class EmptyProductComponent {
         this.stockService = stockService;
         this.router = router;
         this.searchValue = "";
-        this.list = [
-            { id: "1", idProvider: "200", name: "Google Play", amount: "80", buyingPrice: "8.50", sellPrice: "9.50", tva: "5", profit: "1500" },
-        ];
+        this.list = [];
     }
     ngOnInit() {
-        this.getSearchCustomers();
+        this.getSearchEmptyProduct();
     }
-    getSearchCustomers() {
-        this.list = this.stockService.getSearchProductOLD();
+    getSearchEmptyProduct() {
+        this.stockService.getSearchEmptyProduct().subscribe({
+            next: data => {
+                this.list = data;
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("stock/error");
+            }
+        });
     }
 }
 EmptyProductComponent.ɵfac = function EmptyProductComponent_Factory(t) { return new (t || EmptyProductComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_component__WEBPACK_IMPORTED_MODULE_1__["StockService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"])); };
@@ -5131,7 +5028,7 @@ function AddInvoiceComponent_tr_78_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "td");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "input", 31);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function AddInvoiceComponent_tr_78_Template_input_ngModelChange_10_listener($event) { const product_r2 = ctx.$implicit; return product_r2.TVA = $event; });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function AddInvoiceComponent_tr_78_Template_input_ngModelChange_10_listener($event) { const product_r2 = ctx.$implicit; return product_r2.tva = $event; });
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "td");
@@ -5158,8 +5055,8 @@ function AddInvoiceComponent_tr_78_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", product_r2.sellPrice);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("name", product_r2.id);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("value", product_r2.TVA);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", product_r2.TVA);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("value", product_r2.tva);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", product_r2.tva);
 } }
 function AddInvoiceComponent_tr_125_Template(rf, ctx) { if (rf & 1) {
     const _r10 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
@@ -5202,14 +5099,14 @@ function AddInvoiceComponent_tr_125_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](product_r8.sellPrice);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](product_r8.TVA);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](product_r8.tva);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](product_r8.price);
 } }
 class AddInvoiceComponent {
-    constructor(stockService, cutomerService, router, route, invoiceService) {
+    constructor(stockService, customerService, router, route, invoiceService) {
         this.stockService = stockService;
-        this.cutomerService = cutomerService;
+        this.customerService = customerService;
         this.router = router;
         this.route = route;
         this.invoiceService = invoiceService;
@@ -5223,17 +5120,14 @@ class AddInvoiceComponent {
         this.customer = {};
         this.invoice = {};
         this.lineTemp = {};
-        this.list = [
-        //{id : "1654646546546546464", name : "Google", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-        //{id : "2", name : "Yahoo", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-        ];
+        this.list = [];
         this.listline = [];
         this.listSearchLine = [];
     }
     ;
     ngOnInit() {
         this.routeSub = this.route.params.subscribe(params => {
-            this.cutomerService.setCurrentIdSelected(params['idcustomer']);
+            this.customerService.setCurrentIdSelected(params['idcustomer']);
         });
         this.getCustomerById();
         this.getSearchCustomers();
@@ -5250,8 +5144,15 @@ class AddInvoiceComponent {
             newCredit: this.credit,
             paid: this.paid
         };
-        this.invoiceService.addInvoice(this.invoice);
-        this.router.navigateByUrl("invoice/success");
+        this.invoiceService.addInvoice(this.invoice).subscribe({
+            next: data => {
+                this.router.navigateByUrl("invoice/success");
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("invoice/error");
+            }
+        });
     }
     onPrint(divName) {
         var mywindow = window.open('', 'PRINT');
@@ -5284,7 +5185,7 @@ class AddInvoiceComponent {
         this.lineTemp.price = Number(this.lineTemp.amount) * Number(this.lineTemp.sellPrice);
         this.listline.push(this.lineTemp);
         this.somme = this.somme + this.lineTemp.price;
-        this.sommeTVA = this.sommeTVA + this.lineTemp.price + ((this.lineTemp.price * Number(this.lineTemp.TVA)) / 100);
+        this.sommeTVA = this.sommeTVA + this.lineTemp.price + ((this.lineTemp.price * Number(this.lineTemp.tva)) / 100);
         this.listSearchLine = [];
     }
     calCredit() {
@@ -5303,29 +5204,48 @@ class AddInvoiceComponent {
     removeLine(id) {
         this.lineTemp = this.listline.find(x => x.id == id);
         this.somme = this.somme - this.lineTemp.price;
-        this.sommeTVA = this.sommeTVA - this.lineTemp.price - ((this.lineTemp.price * Number(this.lineTemp.TVA)) / 100);
+        this.sommeTVA = this.sommeTVA - this.lineTemp.price - ((this.lineTemp.price * Number(this.lineTemp.tva)) / 100);
         const index = this.listline.findIndex((e) => e.id === id);
         if (index !== -1) {
             this.listline.splice(index, 1);
         }
     }
     getCustomerById() {
-        this.customer = this.cutomerService.getCustomerByCurrentIdOLD();
+        this.customerService.getCustomerByCurrentId().subscribe({
+            next: data => {
+                this.customer = data;
+            },
+            error: error => {
+                console.error('There was an error!', error);
+                this.router.navigateByUrl("invoice/error");
+            }
+        });
     }
     getSearchCustomers() {
         if (this.searchValue != "") {
             this.stockService.setSearchValue(this.searchValue);
-            this.list = this.stockService.getSearchCustomersOLD();
-            for (var i = 0; i < this.list.length; i++) {
-                this.lineTemp = { id: this.list[i].id,
-                    idProvider: this.list[i].idProvider,
-                    name: this.list[i].name,
-                    amount: "",
-                    sellPrice: this.list[i].sellPrice,
-                    TVA: this.list[i].tva,
-                    price: 0,
-                };
-                this.listSearchLine.push(this.lineTemp);
+            if (this.searchValue != "") {
+                this.stockService.setSearchValue(this.searchValue);
+                this.stockService.getSearchProduct().subscribe({
+                    next: data => {
+                        this.list = data;
+                        for (var i = 0; i < this.list.length; i++) {
+                            this.lineTemp = { id: this.list[i].id,
+                                idProvider: this.list[i].idProvider,
+                                name: this.list[i].name,
+                                amount: "",
+                                sellPrice: this.list[i].sellPrice,
+                                tva: this.list[i].tva,
+                                price: 0,
+                            };
+                            this.listSearchLine.push(this.lineTemp);
+                        }
+                    },
+                    error: error => {
+                        console.error('There was an error!', error);
+                        this.router.navigateByUrl("invoice/error");
+                    }
+                });
             }
         }
     }
@@ -6153,7 +6073,7 @@ class SuccessInvoiceComponent {
     }
 }
 SuccessInvoiceComponent.ɵfac = function SuccessInvoiceComponent_Factory(t) { return new (t || SuccessInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_component__WEBPACK_IMPORTED_MODULE_1__["InvoiceService"])); };
-SuccessInvoiceComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: SuccessInvoiceComponent, selectors: [["app-successinvoice"]], decls: 39, vars: 0, consts: [[1, "sidenav"], [1, "card"], ["rel", "noopener", "routerLink", "/menu", "routerLinkActive", "active", 1, "card"], ["xmlns", "http://www.w3.org/2000/svg", "width", "24", "height", "24", "viewBox", "0 0 24 24", 1, "material-icons"], ["d", "M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"], ["d", "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"], ["rel", "noopener", "routerLink", "/invoice/add", "routerLinkActive", "active", 1, "card"], ["rel", "noopener", "routerLink", "/stock/product/search", "routerLinkActive", "active", 1, "card"], [1, "main"], [1, "container-g"], ["role", "main", 1, "content"], ["id", "clouds", "alt", "Gray Clouds Background", "xmlns", "http://www.w3.org/2000/svg", "width", "2611.084", "height", "485.677", "viewBox", "0 0 2611.084 485.677"], ["id", "Path_39", "data-name", "Path 39", "d", "M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z", "transform", "translate(142.69 -634.312)", "fill", "#eee"]], template: function SuccessInvoiceComponent_Template(rf, ctx) { if (rf & 1) {
+SuccessInvoiceComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: SuccessInvoiceComponent, selectors: [["app-successinvoice"]], decls: 39, vars: 0, consts: [[1, "sidenav"], [1, "card"], ["rel", "noopener", "routerLink", "/menu", "routerLinkActive", "active", 1, "card"], ["xmlns", "http://www.w3.org/2000/svg", "width", "24", "height", "24", "viewBox", "0 0 24 24", 1, "material-icons"], ["d", "M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"], ["d", "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"], ["rel", "noopener", "routerLink", "/invoice/add", "routerLinkActive", "active", 1, "card"], ["rel", "noopener", "routerLink", "/invoice/search", "routerLinkActive", "active", 1, "card"], [1, "main"], [1, "container-g"], ["role", "main", 1, "content"], ["id", "clouds", "alt", "Gray Clouds Background", "xmlns", "http://www.w3.org/2000/svg", "width", "2611.084", "height", "485.677", "viewBox", "0 0 2611.084 485.677"], ["id", "Path_39", "data-name", "Path 39", "d", "M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z", "transform", "translate(142.69 -634.312)", "fill", "#eee"]], template: function SuccessInvoiceComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "h5");
@@ -6295,79 +6215,32 @@ class ProviderService {
     /*
     * addComponent
     */
-    addCustomerOLD(customer) {
-        let currentId = "1";
-        let index = this.list.findIndex((e) => e.id === currentId);
-        while (index !== -1) {
-            currentId = currentId + 1;
-            index = this.list.findIndex((e) => e.id === currentId);
-        }
-        customer.id = currentId;
-        this.list.push(customer);
-        this.http.post("http://localhost:8080/paybay/customer/add", customer);
-    }
-    /*
-    * addComponent
-    */
     addProvider(provider) {
-        return this.http.post("http://localhost:8080/paybay/customer/add", provider, httpOptions);
+        return this.http.post("http://localhost:8080/paybay/provider/add", provider, httpOptions);
     }
     /*
     * getComponentByCurrentId
     */
-    getCustomerByCurrentIdOLD() {
-        return this.listProvider.find(x => x.id == this.currentIdSelected);
-    }
     getProviderByCurrentId() {
-        return this.http.get("http://localhost:8080/paybay/customer/" + this.currentIdSelected);
+        return this.http.get("http://localhost:8080/paybay/provider/" + this.currentIdSelected);
     }
     /*
     * modifiyComponent
     */
-    modifiyCustomerOLD(customer) {
-        const index = this.list.findIndex((e) => e.id === customer.id);
-        if (index === -1) {
-            this.list.push(customer);
-        }
-        else {
-            this.list[index] = customer;
-        }
-    }
     modifiyProvider(provider) {
-        return this.http.post("http://localhost:8080/paybay/customer/update", provider, httpOptions);
+        return this.http.post("http://localhost:8080/paybay/provider/update", provider, httpOptions);
     }
     /*
     * removeComponent
     */
-    removeCustomerOLD() {
-        const index = this.list.findIndex((e) => e.id === this.currentIdSelected);
-        if (index !== -1) {
-            this.list.splice(index, 1);
-        }
-        this.currentIdSelected = "0";
-    }
     removeProvider(provider) {
-        return this.http.post("http://localhost:8080/paybay/customer/remove", provider, httpOptions);
+        return this.http.post("http://localhost:8080/paybay/provider/remove", provider, httpOptions);
     }
     /*
     * getAllComponent
     */
-    getSearchCustomersOLD() {
-        let list = [];
-        if (this.searchValue === "") {
-            return this.list;
-        }
-        else {
-            list = this.list.filter(e => ((e.firstname.match(this.searchValue)) || (e.lastname.match(this.searchValue))));
-            this.searchValue = "";
-            return list;
-        }
-    }
-    /*
-  * getAllComponent
-  */
     getSearchProviders() {
-        return this.http.post("http://localhost:8080/paybay/customer", this.searchValue, httpOptions);
+        return this.http.post("http://localhost:8080/paybay/provider", this.searchValue, httpOptions);
     }
 }
 ProviderService.ɵfac = function ProviderService_Factory(t) { return new (t || ProviderService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
@@ -6715,10 +6588,7 @@ class SearchProductComponent {
         this.stockService = stockService;
         this.router = router;
         this.searchValue = "";
-        this.list = [
-        //{id : "1654646546546546464", name : "Google", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-        //{id : "2", name : "Yahoo", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-        ];
+        this.list = [];
     }
     ngOnInit() {
         this.getSearchCustomers();
@@ -6726,7 +6596,15 @@ class SearchProductComponent {
     getSearchCustomers() {
         if (this.searchValue != "") {
             this.stockService.setSearchValue(this.searchValue);
-            this.list = this.stockService.getSearchCustomersOLD();
+            this.stockService.getSearchProduct().subscribe({
+                next: data => {
+                    this.list = data;
+                },
+                error: error => {
+                    console.error('There was an error!', error);
+                    this.router.navigateByUrl("stock/error");
+                }
+            });
         }
     }
 }
