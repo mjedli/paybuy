@@ -36,6 +36,7 @@ import { SearchInvoiceComponent } from './invoice/search/search.component';
 import { SearchDateInvoiceComponent } from './invoice/searchdate/searchdate.component';
 import { AddInvoiceComponent } from './invoice/add/add.component';
 import { SuccessInvoiceComponent } from './invoice/success/success.component';
+import { ErrorInvoiceComponent } from './invoice/error/error.component';
 import { InvoiceComponent } from './invoice/invoice/invoice.component';
 
 import { AddProviderComponent } from './provider/add/add.component';
@@ -88,7 +89,8 @@ import { InvoiceService } from './invoice/service.component';
     SearchProviderComponent,
     DetailsProviderComponent,
     DeleteProviderComponent,
-    UpdateProviderComponent
+    UpdateProviderComponent,
+    ErrorInvoiceComponent
     
   ],
   imports: [

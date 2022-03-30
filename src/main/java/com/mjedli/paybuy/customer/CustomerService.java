@@ -41,5 +41,10 @@ public class CustomerService {
 	public DeleteResult removeCustomer(Customer customer) {
 		return cutsomerRepository.removeCustomer(customer);
 	}
+
+	public void addCreditToCustomer(String idCustomer, String newCredit) {
+		cutsomerRepository.addCreditToCustomer(idCustomer, newCredit);
+		
+	}
 	
 }

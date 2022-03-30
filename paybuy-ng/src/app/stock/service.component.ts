@@ -81,6 +81,13 @@ export class StockService {
   }
   
   /*
+  * getAllComponent with 0 amount
+  */
+  public getSearchProductNotEmpty():Observable<Product[]> {
+    return this.http.post<Product[]>("http://localhost:8080/paybay/stock/notempty", this.searchValue, httpOptions);
+  }
+  
+  /*
   * getSearchEmptyProduct
   */
   public getSearchEmptyProduct():Observable<Product[]> {

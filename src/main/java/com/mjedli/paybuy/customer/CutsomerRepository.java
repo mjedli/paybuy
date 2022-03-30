@@ -81,5 +81,11 @@ public class CutsomerRepository {
 	public DeleteResult removeCustomer(Customer customer) {
 		return mongoOperations.remove(customer);
 	}
+
+	public void addCreditToCustomer(String idCustomer, String newCredit) {
+		Customer customer = getCustomerById(idCustomer);
+		customer.setCredit(newCredit);
+		updateCustomer(customer);
+	}
 	
 }

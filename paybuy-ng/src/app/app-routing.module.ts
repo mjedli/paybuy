@@ -26,6 +26,7 @@ import { AddInvoiceComponent } from './invoice/add/add.component';
 import { SuccessInvoiceComponent } from './invoice/success/success.component';
 import { SearchInvoiceComponent } from './invoice/search/search.component';
 import { InvoiceComponent } from './invoice/invoice/invoice.component';
+import { ErrorInvoiceComponent } from './invoice/error/error.component';
 
 import { AddProviderComponent } from './provider/add/add.component';
 import { SuccessProviderComponent } from './provider/success/success.component'
@@ -71,6 +72,7 @@ const routes: Routes = [
  	{ path: 'invoice/search', component: SearchInvoiceComponent },
  	{ path: 'invoice/search/:idcustomer', component: SearchDateInvoiceComponent },
  	{ path: 'invoice/success', component: SuccessInvoiceComponent },
+ 	{ path: 'invoice/error', component: ErrorInvoiceComponent },
  	{ path: 'invoice/:idcustomer/:idinvoice', component: InvoiceComponent },
  	
  

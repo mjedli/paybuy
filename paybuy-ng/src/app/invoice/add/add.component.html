@@ -75,23 +75,32 @@
     </tr>
   </thead>
   <tbody>
+     <tr>
+      <th class="stylecsserror" colspan="6">{{errorMessage}}</th>
+    </tr>
+    <tr *ngFor="let productO of listSearchLineOrigine">
+      <th scope="row">{{productO.id}}</th>
+      <td colspan="4">{{productO.name}}</td>
+      <th>{{productO.amount}}</th>
+    </tr>
     <tr *ngFor="let product of listSearchLine">
       <th scope="row">{{product.id}}</th>
       <td>{{product.name}}</td>
       <td><input
-			type="text" name="product.amount" class="form-control"
+			type="text" name="quantite{{product.id}}" class="form-control"
 			placeholder="Quantité" required autofocus 
 			value="{{product.amount}}" [(ngModel)]="product.amount" /></td>
       <td><input
-			type="text" name="{{product.id}}sp" class="form-control"
+			type="text" name="price{{product.id}}" class="form-control"
 			placeholder="Prix Unitaire" required autofocus 
 			value="{{product.sellPrice}}" [(ngModel)]="product.sellPrice" /></td>
       <td><input
-			type="text" name="{{product.id}}" class="form-control"
+			type="text" name="tva{{product.id}}" class="form-control"
 			placeholder="TVA" required autofocus 
 			value="{{product.tva}}" [(ngModel)]="product.tva" />
 	</td>
-      <td><a (click)="saveLine(product.id)"><i class="material-icons">add</i></a></td>
+      <td>
+      <div><a (click)="saveLine(product.id)"><i class="material-icons">add</i></a></div></td>
     </tr>
   </tbody>
 </table>
@@ -219,3 +228,6 @@
 <app-footer></app-footer>
 
 </div>
+
+
+

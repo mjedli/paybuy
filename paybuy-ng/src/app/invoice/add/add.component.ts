@@ -21,6 +21,7 @@ export class AddInvoiceComponent implements OnInit {
 				public invoiceService:InvoiceService) { }
 	
 	searchValue:string="";
+	errorMessage:string="";
 	
 	currentDate = new Date();;
 	
@@ -35,12 +36,15 @@ export class AddInvoiceComponent implements OnInit {
 	invoice:Invoice = {} as Invoice;
 	
 	lineTemp:Line = {} as Line;
+	lineTempOrigine:Line = {} as Line;
 	
 	list:Product[] = [];
 	
 	listline:Line[] = [];
 	
 	listSearchLine:Line[] = [];
+	
+	listSearchLineOrigine:Line[] = [];
 	
 	private routeSub: Subscription;
 	
@@ -111,25 +115,35 @@ export class AddInvoiceComponent implements OnInit {
 	
 	resetSearchLine() {
 		this.listSearchLine = [];
+		this.listSearchLineOrigine = [];
 	}
 	
 	saveLine(id:string) {
 		this.lineTemp = this.listSearchLine.find(x => x.id == id)!;
-		this.lineTemp.price = Number(this.lineTemp.amount)*Number(this.lineTemp.sellPrice);
-		this.listline.push(this.lineTemp);
-		this.somme=this.somme+this.lineTemp.price;
-		this.sommeTVA=this.sommeTVA+this.lineTemp.price+((this.lineTemp.price*Number(this.lineTemp.tva))/100);
-		this.listSearchLine = [];
+		this.lineTempOrigine = this.listSearchLineOrigine.find(y => y.id == id)!;
+		if(this.lineTemp.amount<=this.lineTempOrigine.amount) {
+			this.lineTemp.price = Number(this.lineTemp.amount)*Number(this.lineTemp.sellPrice);
+			this.listline.push(this.lineTemp);
+			this.somme=this.somme+this.lineTemp.price;
+			this.sommeTVA=this.sommeTVA+this.lineTemp.price+((this.lineTemp.price*Number(this.lineTemp.tva))/100);
+			this.listSearchLine = [];
+			this.listSearchLineOrigine = [];
+			this.errorMessage="";
+		} else {
+			this.errorMessage="Quantité erreur!";
+		}
+		
+
 	}
 	
 	calCredit() {
 		if(this.paid==this.sommeTVA) {
-			this.credit=this.customer.credit;
+			this.credit=Number(this.customer.credit);
 		} else {
 			if(this.paid<this.sommeTVA) {
-				this.credit=this.sommeTVA-this.paid+this.customer.credit;
+				this.credit=Number(this.sommeTVA)-Number(this.paid)+Number(this.customer.credit);
 			} else if(this.paid>this.sommeTVA) {
-				this.credit=this.customer.credit-(this.paid-this.sommeTVA);
+				this.credit=Number(this.customer.credit)-(Number(this.paid)-Number(this.sommeTVA));
 			} 
 		}
 
@@ -166,20 +180,36 @@ export class AddInvoiceComponent implements OnInit {
 			this.stockService.setSearchValue(this.searchValue);
 			if(this.searchValue != "") {
 				 this.stockService.setSearchValue(this.searchValue);
-			   	 this.stockService.getSearchProduct().subscribe({
+			   	 this.stockService.getSearchProductNotEmpty().subscribe({
 			        next: data => {
 			            this.list = data;
 			            for (var i = 0; i < this.list.length; i++) {
 
-							this.lineTemp = { id:this.list[i].id,
-											  idProvider:this.list[i].idProvider,
-											  name:this.list[i].name,
-											  amount:"",
-											  sellPrice:this.list[i].sellPrice,
-											  tva:this.list[i].tva,
-											  price:0,	
-											};
-						  	this.listSearchLine.push(this.lineTemp);
+							this.lineTemp = this.listline.find(z => z.id == this.list[i].id)!;
+							
+							if(this.lineTemp == undefined) {
+								this.lineTemp = { id:this.list[i].id,
+												  idProvider:this.list[i].idProvider,
+												  name:this.list[i].name,
+												  amount:Number(this.list[i].amount),
+												  sellPrice:this.list[i].sellPrice,
+												  tva:this.list[i].tva,
+												  price:0,	
+												};
+							  	this.listSearchLine.push(this.lineTemp);
+							  	
+							  	this.lineTempOrigine = { id:this.list[i].id,
+												  idProvider:this.list[i].idProvider,
+												  name:this.list[i].name,
+												  amount:Number(this.list[i].amount),
+												  sellPrice:this.list[i].sellPrice,
+												  tva:this.list[i].tva,
+												  price:0,	
+												};
+							  	
+							  	this.listSearchLineOrigine.push(this.lineTempOrigine);
+							}
+							
 						}
 			        },
 			        error: error => {

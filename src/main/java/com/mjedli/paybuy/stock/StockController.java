@@ -3,6 +3,7 @@
  */
 package com.mjedli.paybuy.stock;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,24 @@ public class StockController {
 
 		return stockService.getSearchStock(value);
 	
+	}
+	
+	@PostMapping(value = HREF_BASE + "/stock/notempty")
+	@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
+	private List<Product> getSearchStockNotEmpty(@RequestBody String value) {
+
+		List<Product> resultTemp = stockService.getSearchStock(value);
+		
+		List<Product> result = new ArrayList<Product>();
+		
+		for(Product product : resultTemp) {
+			
+			if(Integer.valueOf(product.getAmount()) > 0) {
+				result.add(product);
+			}
+		}
+		
+		return result;
 	}
 	
 	@GetMapping(value = HREF_BASE + "/stock/empty")

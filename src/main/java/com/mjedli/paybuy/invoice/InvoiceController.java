@@ -14,9 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mjedli.paybuy.SequenceGeneratorService;
+import com.mjedli.paybuy.customer.CustomerService;
 import com.mjedli.paybuy.customer.model.Customer;
 import com.mjedli.paybuy.invoice.model.Invoice;
+import com.mjedli.paybuy.invoice.model.Line;
 import com.mjedli.paybuy.invoice.model.SearchInvoice;
+import com.mjedli.paybuy.stock.StockService;
+import com.mjedli.paybuy.stock.model.Product;
 
 /**
  * @author mjedli
@@ -32,6 +36,12 @@ public class InvoiceController {
 	private InviceService invoiceService;
 	
 	@Autowired
+	private StockService stockService;
+	
+	@Autowired
+	private CustomerService customerService;
+	
+	@Autowired
 	private SequenceGeneratorService sequenceGeneratorService;
 	
 	@PostMapping(value = HREF_BASE + "/invoice/add")
@@ -40,8 +50,17 @@ public class InvoiceController {
 		
 		invoice.setId(sequenceGeneratorService.generateSequence(Invoice.SEQUENCE_NAME));
 		
+		for(Line line : invoice.getListline()) {
+			Product product = stockService.getProductById(String.valueOf(line.getId()));
+			if(Integer.valueOf(product.getAmount())>0) {
+				product.setAmount(String.valueOf(Integer.valueOf(product.getAmount())-Integer.valueOf(line.getAmount())));
+				stockService.updateProduct(product);
+			}
+		}
+		
+		customerService.addCreditToCustomer(invoice.getIdCustomer(), invoice.getNewCredit());
+		
 		return invoiceService.addInvoice(invoice);
-	
 	}
 	
 	@PostMapping(value = HREF_BASE + "/invoice/date")
