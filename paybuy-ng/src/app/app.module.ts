@@ -38,6 +38,7 @@ import { AddInvoiceComponent } from './invoice/add/add.component';
 import { SuccessInvoiceComponent } from './invoice/success/success.component';
 import { ErrorInvoiceComponent } from './invoice/error/error.component';
 import { InvoiceComponent } from './invoice/invoice/invoice.component';
+import { ResultInvoiceComponent } from './invoice/result/result.component';
 
 import { AddProviderComponent } from './provider/add/add.component';
 import { SuccessProviderComponent } from './provider/success/success.component'
@@ -82,6 +83,7 @@ import { InvoiceService } from './invoice/service.component';
     SearchInvoiceComponent,
     SearchDateInvoiceComponent,
     InvoiceComponent,
+    ResultInvoiceComponent,
     
     AddProviderComponent,
     SuccessProviderComponent,

@@ -3,6 +3,7 @@
  */
 package com.mjedli.paybuy.invoice;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.mjedli.paybuy.customer.CustomerService;
 import com.mjedli.paybuy.customer.model.Customer;
 import com.mjedli.paybuy.invoice.model.Invoice;
 import com.mjedli.paybuy.invoice.model.Line;
+import com.mjedli.paybuy.invoice.model.Result;
 import com.mjedli.paybuy.invoice.model.SearchInvoice;
 import com.mjedli.paybuy.stock.StockService;
 import com.mjedli.paybuy.stock.model.Product;
@@ -33,7 +35,7 @@ public class InvoiceController {
 	private static final String HREF_BASE = "/paybay";
 	
 	@Autowired
-	private InviceService invoiceService;
+	private InvoiceService invoiceService;
 	
 	@Autowired
 	private StockService stockService;
@@ -80,5 +82,35 @@ public class InvoiceController {
 	
 	}
 	
+	@PostMapping(value = HREF_BASE + "/invoice/result")
+	@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
+	private Result calReslut(@RequestBody Date date) {
+		
+		Result result = new Result();
+		
+		Long somme = (long) 0;
+		List<Invoice> list = invoiceService.calReslutDay(date);
+		for(Invoice invoice : list) {
+			somme = somme + Long.valueOf(invoice.getTotalTva());
+		}
+		result.setResultDay(somme.toString());
+
+		somme = (long) 0;
+		list = invoiceService.calReslutMonth(date);
+		for(Invoice invoice : list) {
+			somme = somme + Long.valueOf(invoice.getTotalTva());
+		}
+		result.setResultMonth(somme.toString());
+
+		somme = (long) 0;
+		list = invoiceService.calReslutYear(date);
+		for(Invoice invoice : list) {
+			somme = somme + Long.valueOf(invoice.getTotalTva());
+		}
+		result.setResultYear(somme.toString());
+		
+		return result;
+	
+	}
 	
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Customer } from '../customer/model/customer';
 import { Invoice } from './model/invoice';
+import { Result } from './model/result';
 import { SearchInvoice } from './model/SearchInvoice';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -62,5 +63,12 @@ export class InvoiceService {
   */
   public searchInvoicesByDate(searchInvoice:SearchInvoice):Observable<Invoice[]> {
     return this.http.post<Invoice[]>("http://localhost:8080/paybay/invoice/date", searchInvoice, httpOptions);
+  }
+  
+    /*
+  * Cal result
+  */
+  public calResult(date:Date):Observable<Result> {
+    return this.http.post<Result>("http://localhost:8080/paybay/invoice/result", date, httpOptions);
   }
 }
