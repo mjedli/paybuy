@@ -19,7 +19,7 @@ export class StockService {
   	private usersUrl: string;
 
  	constructor(private http: HttpClient) {
-    	this.usersUrl = 'http://localhost:8080/paybay/customer';
+    	this.usersUrl = globalThis.customEnvironment.api.url;
  	}
 
   listProduct  : Product[] = [];
@@ -47,14 +47,14 @@ export class StockService {
   * addComponent
   */
 	public addProduct(product: Product):Observable<Product> {
-	   	return this.http.post<Product>("http://localhost:8080/paybay/stock/add", product, httpOptions);
+	   	return this.http.post<Product>(this.usersUrl+"/paybay/stock/add", product, httpOptions);
 	}
   
   /*
   * getComponentByCurrentId
   */
   public getProductByCurrentId():Observable<Product> {
-    return this.http.get<Product>("http://localhost:8080/paybay/stock/"+this.currentIdSelected);
+    return this.http.get<Product>(this.usersUrl+"/paybay/stock/"+this.currentIdSelected);
   }
 
   /*
@@ -62,7 +62,7 @@ export class StockService {
   */
 
   public modifiyProduct(product:Product):Observable<Product> {
-    return this.http.post<Product>("http://localhost:8080/paybay/stock/update", product, httpOptions);
+    return this.http.post<Product>(this.usersUrl+"/paybay/stock/update", product, httpOptions);
   }
 
   /*
@@ -70,28 +70,28 @@ export class StockService {
   */
 
   public removeProduct(product:Product):Observable<number> {
-    return this.http.post<number>("http://localhost:8080/paybay/stock/remove", product, httpOptions);
+    return this.http.post<number>(this.usersUrl+"/paybay/stock/remove", product, httpOptions);
   }
 
   /*
   * getAllComponent
   */
   public getSearchProduct():Observable<Product[]> {
-    return this.http.post<Product[]>("http://localhost:8080/paybay/stock", this.searchValue, httpOptions);
+    return this.http.post<Product[]>(this.usersUrl+"/paybay/stock", this.searchValue, httpOptions);
   }
   
   /*
   * getAllComponent with 0 amount
   */
   public getSearchProductNotEmpty():Observable<Product[]> {
-    return this.http.post<Product[]>("http://localhost:8080/paybay/stock/notempty", this.searchValue, httpOptions);
+    return this.http.post<Product[]>(this.usersUrl+"/paybay/stock/notempty", this.searchValue, httpOptions);
   }
   
   /*
   * getSearchEmptyProduct
   */
   public getSearchEmptyProduct():Observable<Product[]> {
-    return this.http.get<Product[]>("http://localhost:8080/paybay/stock/empty",httpOptions);
+    return this.http.get<Product[]>(this.usersUrl+"/paybay/stock/empty",httpOptions);
   }
 
 }

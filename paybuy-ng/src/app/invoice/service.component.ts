@@ -21,7 +21,7 @@ export class InvoiceService {
   	private usersUrl: string;
 
  	constructor(private http: HttpClient) {
-    	this.usersUrl = 'http://localhost:8080/paybay/customer';
+    	this.usersUrl = globalThis.customEnvironment.api.url;
  	}
 
   listInvoice:Invoice[] = [];
@@ -48,27 +48,27 @@ export class InvoiceService {
   * addComponent
   */
   public addInvoice(invoice:Invoice):Observable<Invoice> {
-    return this.http.post<Invoice>("http://localhost:8080/paybay/invoice/add", invoice, httpOptions);
+    return this.http.post<Invoice>(this.usersUrl+"/paybay/invoice/add", invoice, httpOptions);
   }
 
   /*
   * getComponentByCurrentId
   */
   public getInvoiceByCurrentId():Observable<Invoice> {
-    return this.http.get<Invoice>("http://localhost:8080/paybay/invoice/"+this.currentIdSelected);
+    return this.http.get<Invoice>(this.usersUrl+"/paybay/invoice/"+this.currentIdSelected);
   }
   
   /*
   * getAllComponentByDate
   */
   public searchInvoicesByDate(searchInvoice:SearchInvoice):Observable<Invoice[]> {
-    return this.http.post<Invoice[]>("http://localhost:8080/paybay/invoice/date", searchInvoice, httpOptions);
+    return this.http.post<Invoice[]>(this.usersUrl+"/paybay/invoice/date", searchInvoice, httpOptions);
   }
   
     /*
   * Cal result
   */
   public calResult(date:Date):Observable<Result> {
-    return this.http.post<Result>("http://localhost:8080/paybay/invoice/result", date, httpOptions);
+    return this.http.post<Result>(this.usersUrl+"/paybay/invoice/result", date, httpOptions);
   }
 }

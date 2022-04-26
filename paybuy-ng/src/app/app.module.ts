@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 
@@ -54,7 +56,6 @@ import { ProviderService } from './provider/service.component';
 import { InvoiceService } from './invoice/service.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent, ToolbarComponent, FooterComponent, MenuComponent, 
@@ -99,7 +100,8 @@ import { InvoiceService } from './invoice/service.component';
     BrowserModule, FormsModule, HttpClientModule,
     AppRoutingModule
   ],
-  providers: [CustomerService, StockService, ProviderService, InvoiceService],
+  providers: [
+	CustomerService, StockService, ProviderService, InvoiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -19,18 +19,12 @@ export class ProviderService {
   	private usersUrl: string;
 
  	constructor(private http: HttpClient) {
-    	this.usersUrl = 'http://localhost:8080/paybay/customer';
+    	this.usersUrl = globalThis.customEnvironment.api.url;
  	}
 
-  listProvider  : Provider[] = [
-    {id : "165464654646666", name : "Google Play Advertising", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-    {id : "2", name : "Yahoo", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1"},
-  ];
+  listProvider  : Provider[] = [];
 
-  list  : Customer[] = [
-    {id : "1", name : "Google", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1", credit : 2350.50},
-    {id : "2", name : "Yahoo", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1", credit: 3520.25},
-  ];
+  list  : Customer[] = [];
 
   currentIdSelected:string = "0";
   searchValue:string = "";
@@ -53,7 +47,7 @@ export class ProviderService {
   * addComponent
   */
   public addProvider(provider:Provider):Observable<Provider> {
-    return this.http.post<Provider>("http://localhost:8080/paybay/provider/add", provider, httpOptions);
+    return this.http.post<Provider>(this.usersUrl+"/paybay/provider/add", provider, httpOptions);
 
   }
   
@@ -61,27 +55,27 @@ export class ProviderService {
   * getComponentByCurrentId
   */
   public getProviderByCurrentId():Observable<Provider> {
-    return this.http.get<Provider>("http://localhost:8080/paybay/provider/"+this.currentIdSelected);
+    return this.http.get<Provider>(this.usersUrl+"/paybay/provider/"+this.currentIdSelected);
   }
 
   /*
   * modifiyComponent
   */
   public modifiyProvider(provider:Provider):Observable<Provider> {
-    return this.http.post<Provider>("http://localhost:8080/paybay/provider/update", provider, httpOptions);
+    return this.http.post<Provider>(this.usersUrl+"/paybay/provider/update", provider, httpOptions);
   }
 
   /*
   * removeComponent
   */
   public removeProvider(provider:Provider):Observable<number> {
-    return this.http.post<number>("http://localhost:8080/paybay/provider/remove", provider, httpOptions);
+    return this.http.post<number>(this.usersUrl+"/paybay/provider/remove", provider, httpOptions);
   }
 
   /*
   * getAllComponent
   */
   public getSearchProviders():Observable<Provider[]> {
-    return this.http.post<Provider[]>("http://localhost:8080/paybay/provider", this.searchValue, httpOptions);
+    return this.http.post<Provider[]>(this.usersUrl+"/paybay/provider", this.searchValue, httpOptions);
   }
 }

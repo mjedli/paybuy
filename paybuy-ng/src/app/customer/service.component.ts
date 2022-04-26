@@ -12,19 +12,16 @@ const httpOptions = {
   })
 };
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CustomerService {
 
   	private usersUrl: string;
 
  	constructor(private http: HttpClient) {
-    	this.usersUrl = 'http://localhost:8080/paybay/customer';
+    	this.usersUrl = globalThis.customEnvironment.api.url;
  	}
 
-  list  : Customer[] = [
-    {id : "14646464654645464", name : "Google Play Advertising 2022", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1", credit:3520.50},
-    {id : "2", name : "Yahoo", firstname : "Jedli", lastname : "Mejdi", birthday : "02/02/1986", mobile : "985986760", address : "address 1", credit:320},
-  ];
+  list  : Customer[] = [];
 
   currentIdSelected:string = "0";
   searchValue:string = "";
@@ -47,7 +44,7 @@ export class CustomerService {
   * addComponent
   */
   public addCustomer(customer:Customer):Observable<Customer> {
-    return this.http.post<Customer>("http://localhost:8080/paybay/customer/add", customer, httpOptions);
+    return this.http.post<Customer>(this.usersUrl + "/paybay/customer/add", customer, httpOptions);
 
   }
   
@@ -55,27 +52,27 @@ export class CustomerService {
   * getComponentByCurrentId
   */
   public getCustomerByCurrentId():Observable<Customer> {
-    return this.http.get<Customer>("http://localhost:8080/paybay/customer/"+this.currentIdSelected);
+    return this.http.get<Customer>(this.usersUrl + "/paybay/customer/"+this.currentIdSelected);
   }
 
   /*
   * modifiyComponent
   */
   public modifiyCustomer(customer:Customer):Observable<Customer> {
-    return this.http.post<Customer>("http://localhost:8080/paybay/customer/update", customer, httpOptions);
+    return this.http.post<Customer>(this.usersUrl + "/paybay/customer/update", customer, httpOptions);
   }
 
   /*
   * removeComponent
   */
   public removeCustomer(customer:Customer):Observable<number> {
-    return this.http.post<number>("http://localhost:8080/paybay/customer/remove", customer, httpOptions);
+    return this.http.post<number>(this.usersUrl + "/paybay/customer/remove", customer, httpOptions);
   }
 
   /*
   * getAllComponent
   */
   public getSearchCustomers():Observable<Customer[]> {
-    return this.http.post<Customer[]>("http://localhost:8080/paybay/customer", this.searchValue, httpOptions);
+    return this.http.post<Customer[]>(this.usersUrl + "/paybay/customer", this.searchValue, httpOptions);
   }
 }
