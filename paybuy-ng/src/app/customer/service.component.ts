@@ -18,7 +18,7 @@ export class CustomerService {
   	private usersUrl: string;
 
  	constructor(private http: HttpClient) {
-    	this.usersUrl = globalThis.customEnvironment.api.url;
+    	this.usersUrl = "http://localhost:8080"; //globalThis.customEnvironment.api.url;
  	}
 
   list  : Customer[] = [];
